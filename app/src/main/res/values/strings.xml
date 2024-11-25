@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OJT.AADA.Assignment12</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+    <string name="sample_overview">After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island.After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island. To survive the harsh environment, Roz bonds with the island\\\'s animals and cares for an orphaned baby goose.After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island.After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island. To survive the harsh environment, Roz bonds with the island\\\'s animals and cares for an orphaned baby goose.</string>
+</resources>
