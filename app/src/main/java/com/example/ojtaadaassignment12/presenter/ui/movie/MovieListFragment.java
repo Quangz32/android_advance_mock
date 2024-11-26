@@ -10,25 +10,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieListBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
-import com.example.ojtaadaassignment12.domain.usecase.GetMoviesUseCase;
 import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
-import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 @SuppressLint("NotifyDataSetChanged")
 public class MovieListFragment extends Fragment {
-//    @Inject
+    //    @Inject
 //    GetMoviesUseCase getMoviesUseCase;
     @Inject
     MovieListViewModel viewModel;
@@ -36,7 +30,7 @@ public class MovieListFragment extends Fragment {
     @Inject
     FavoriteMoviesViewModel favoriteViewModel;
 
-//    private MovieListViewModel viewModel;
+    //    private MovieListViewModel viewModel;
     private FragmentMovieListBinding binding;
     private MovieAdapter adapter;
 
@@ -60,7 +54,7 @@ public class MovieListFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        adapter = new MovieAdapter(null, null, false);
+        adapter = new MovieAdapter(null, false);
         adapter.setMovieItemCallback(new MovieAdapter.MovieItemCallback() {
             @Override
             public void onMovieClicked(Movie movie, int position) {
@@ -68,11 +62,12 @@ public class MovieListFragment extends Fragment {
             }
 
             @Override
-            public void onStarClicked(Movie movie, int position, boolean isFavorite) {
+            public void onStarClicked(Movie movie, int position) {
+                adapter.notifyItemChanged(position);
                 Log.d("qz.star.clicked", movie.getTitle());
-                if (isFavorite){
+                if (movie.isFavorite()) {
                     favoriteViewModel.removeFromFavorites(movie);
-                }else{
+                } else {
                     favoriteViewModel.addToFavorites(movie);
                 }
             }
@@ -86,11 +81,10 @@ public class MovieListFragment extends Fragment {
         viewModel.fetchMovies("e7631ffcb8e766993e5ec0c1f4245f93");
 
         //Observe MovieListViewModel
+
         viewModel.getMoviesLiveData().observe(getViewLifecycleOwner(), movies -> {
-//            adapter = new MovieAdapter(movies, new ArrayList<>() , true);
             adapter.setMovies(movies);
-//            adapter.notifyDataSetChanged();
-            binding.recyclerMovies.setAdapter(adapter); //****
+            adapter.notifyDataSetChanged();
         });
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
@@ -101,13 +95,6 @@ public class MovieListFragment extends Fragment {
             binding.textError.setVisibility(error != null ? View.VISIBLE : View.GONE);
             binding.textError.setText(error);
         });
-
-        //Observe FavoriteMoviesViewModel
-        favoriteViewModel.fetchFavoriteMovies();
-        favoriteViewModel.getFavoriteMovies().observe(getViewLifecycleOwner(), movies -> {
-            adapter.setFavoriteMovies(movies);
-        });
-
     }
 
     @Override

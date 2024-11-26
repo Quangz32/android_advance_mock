@@ -9,9 +9,10 @@ public class Movie {
     private final String releaseDate;
     private final float voteAverage;
     private final boolean adult;
-//    private boolean isFavorite;
+    private boolean isFavorite;
 
-    public Movie(int id, String title, String overview, String posterPath, String releaseDate, float voteAverage, boolean adult) {
+    public Movie(int id, String title, String overview, String posterPath, String releaseDate,
+                 float voteAverage, boolean adult, boolean isFavorite) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -19,7 +20,7 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
         this.adult = adult;
-//        this.isFavorite = isFavorite;
+        this.isFavorite = isFavorite;
     }
 
     public int getId() {
@@ -50,4 +51,25 @@ public class Movie {
         return adult;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+//                ", overview='" + overview + '\'' +
+//                ", posterPath='" + posterPath + '\'' +
+//                ", releaseDate='" + releaseDate + '\'' +
+//                ", voteAverage=" + voteAverage +
+//                ", adult=" + adult +
+                ", isFavorite=" + isFavorite +
+                '}';
+    }
 }

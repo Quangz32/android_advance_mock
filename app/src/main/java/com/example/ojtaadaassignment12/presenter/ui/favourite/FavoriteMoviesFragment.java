@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,8 +17,6 @@ import com.example.ojtaadaassignment12.databinding.FragmentFavoriteMoviesBinding
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.movie.MovieListViewModel;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -33,7 +32,7 @@ public class FavoriteMoviesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         binding = FragmentFavoriteMoviesBinding.inflate(inflater);
+        binding = FragmentFavoriteMoviesBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -53,18 +52,18 @@ public class FavoriteMoviesFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-//        adapter = new MovieAdapter(new ArrayList<>());
-        adapter = new MovieAdapter(null, null, true);
+        adapter = new MovieAdapter(null, true);
         adapter.setMovieItemCallback(new MovieAdapter.MovieItemCallback() {
             @Override
             public void onMovieClicked(Movie movie, int position) {
+                adapter.notifyItemChanged(position);
                 Log.d("qz.movie.clicked", movie.getTitle());
             }
 
             @Override
-            public void onStarClicked(Movie movie, int position, boolean isFavorite) {
+            public void onStarClicked(Movie movie, int position) {
+                adapter.notifyItemChanged(position);
                 Log.d("qz.star.clicked", movie.getTitle());
-//                movieListViewModel.setMovieCode(movie.getId());
                 viewModel.removeFromFavorites(movie);
                 adapter.notifyItemRemoved(position);
             }
@@ -75,16 +74,10 @@ public class FavoriteMoviesFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void fetchAndObserveViewModel(){
+    private void fetchAndObserveViewModel() {
         viewModel.fetchFavoriteMovies();
         viewModel.getFavoriteMovies().observe(getViewLifecycleOwner(), movies -> {
             adapter.setMovies(movies);
-            adapter.notifyDataSetChanged();
-//            adapter.notifyDataSetChanged();
-//            binding.recyclerView.setAdapter(adapter);
-
-//            adapter = new MovieAdapter(movies, null, true);
-//            binding.recyclerView.setAdapter(adapter);
         });
     }
 

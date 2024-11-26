@@ -1,16 +1,14 @@
 package com.example.ojtaadaassignment12.data.local.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Delete;
-import androidx.room.Update;
 
 import com.example.ojtaadaassignment12.data.local.entity.MovieEntity;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 
 @Dao
@@ -26,4 +24,7 @@ public interface MovieDao {
 
     @Query("SELECT * FROM favorite_movies WHERE id = :movieId LIMIT 1")
     Observable<MovieEntity> getFavoriteMovieById(int movieId);
+
+    @Query("SELECT id FROM favorite_movies")
+    Observable<List<Integer>> getFavoriteMovieIds();
 }

@@ -70,6 +70,7 @@
 
             <ImageView
                 android:id="@+id/img_star"
+                customStarTint="@{movie.favorite}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
@@ -77,18 +78,17 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/movie_release_date"
-                customStarTint="@{isFavourite}"
                 app:tint="@color/orange" />
 
-<!--                        <ImageView-->
-<!--                            android:id="@+id/favourite_star_border"-->
-<!--                            android:layout_width="40dp"-->
-<!--                            android:layout_height="40dp"-->
-<!--                            android:layout_marginTop="10dp"-->
-<!--                            android:src="@drawable/baseline_star_border_24"-->
-<!--                            android:visibility="visible"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="@id/movie_release_date" />-->
+            <!--                        <ImageView-->
+            <!--                            android:id="@+id/favourite_star_border"-->
+            <!--                            android:layout_width="40dp"-->
+            <!--                            android:layout_height="40dp"-->
+            <!--                            android:layout_marginTop="10dp"-->
+            <!--                            android:src="@drawable/baseline_star_border_24"-->
+            <!--                            android:visibility="visible"-->
+            <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                            app:layout_constraintTop_toTopOf="@id/movie_release_date" />-->
 
             <ImageView
                 android:id="@+id/movie_18_plus"

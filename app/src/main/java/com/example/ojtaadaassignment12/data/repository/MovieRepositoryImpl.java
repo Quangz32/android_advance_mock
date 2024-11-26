@@ -8,13 +8,17 @@ import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Observable;
 
 public class MovieRepositoryImpl implements MovieRepository {
 
-    private final MovieApi movieApi;
-    private final MovieMapper movieMapper;
+    private final MovieApi movieApi;    //Dùng để load Movie từ API
+    private final MovieMapper movieMapper;  //Dùng để map Movie từ DTO sang Domain Model
+//    private final MovieDao movieDao;    //Dùng để tìm Movie yêu thích
 
+    @Inject
     public MovieRepositoryImpl(MovieApi movieApi, MovieMapper movieMapper) {
         this.movieApi = movieApi;
         this.movieMapper = movieMapper;
@@ -25,10 +29,9 @@ public class MovieRepositoryImpl implements MovieRepository {
         return movieApi.getPopularMovies(apiKey)
                 .map(movieResponse -> {
                     List<MovieDto> movieDtos = movieResponse.getResults();
-                    return movieMapper.mapFromResponse(movieDtos);
+                    return movieMapper.mapDtoListToDomainList(movieDtos);
                 });
     }
-
 
 
 }

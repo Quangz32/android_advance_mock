@@ -23,7 +23,7 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
 
-<!--    Option in 3-dots -->
+    <!--    Option in 3-dots -->
     <item
         android:id="@+id/menu_item_popular"
         android:title="Popular" />

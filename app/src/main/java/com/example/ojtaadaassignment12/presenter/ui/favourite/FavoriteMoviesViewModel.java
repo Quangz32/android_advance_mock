@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ojtaadaassignment12.domain.model.Movie;
-import com.example.ojtaadaassignment12.domain.usecase.GetFavoriteMoviesUseCase;
 import com.example.ojtaadaassignment12.domain.usecase.AddMovieToFavoriteUseCase;
+import com.example.ojtaadaassignment12.domain.usecase.GetFavoriteMoviesUseCase;
 import com.example.ojtaadaassignment12.domain.usecase.RemoveMovieFromFavoriteUseCase;
 
 import java.util.List;

@@ -17,7 +17,6 @@ import com.example.ojtaadaassignment12.databinding.ActivityMainBinding;
 import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
-//import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie.MovieListFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

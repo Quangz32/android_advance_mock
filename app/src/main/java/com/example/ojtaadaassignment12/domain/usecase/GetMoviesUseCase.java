@@ -2,6 +2,7 @@ package com.example.ojtaadaassignment12.domain.usecase;
 
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
+
 import java.util.List;
 
 import javax.inject.Inject;

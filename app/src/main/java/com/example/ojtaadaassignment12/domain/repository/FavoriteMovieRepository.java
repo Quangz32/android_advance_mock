@@ -9,6 +9,10 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface FavoriteMovieRepository {
     Observable<List<Movie>> getFavoriteMovies();
+
+    Observable<List<Integer>> getFavoriteMovieIds();
+
     Completable addMovieToFavorite(Movie movie);
+
     Completable removeMovieFromFavorite(Movie movie);
 }

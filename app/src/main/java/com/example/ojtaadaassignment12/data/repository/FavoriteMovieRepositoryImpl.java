@@ -32,8 +32,13 @@ public class FavoriteMovieRepositoryImpl implements FavoriteMovieRepository {
                 .subscribeOn(Schedulers.io())
                 .map(movieEntities -> {
                     Log.d("qzFavoriteMovieRepository", "Movies in database: " + movieEntities.size());
-                    return movieMapper.mapToDomainList(movieEntities);
+                    return movieMapper.mapEntityListToDomainList(movieEntities);
                 });
+    }
+
+    @Override
+    public Observable<List<Integer>> getFavoriteMovieIds() {
+        return movieDao.getFavoriteMovieIds().subscribeOn(Schedulers.io());
     }
 
     @Override

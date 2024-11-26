@@ -1,10 +1,11 @@
 package com.example.ojtaadaassignment12.data.local.database;
 
+import android.content.Context;
+import android.util.Log;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import android.content.Context;
-import android.util.Log;
 
 import com.example.ojtaadaassignment12.data.local.dao.MovieDao;
 import com.example.ojtaadaassignment12.data.local.entity.MovieEntity;
@@ -13,8 +14,6 @@ import com.example.ojtaadaassignment12.data.local.entity.MovieEntity;
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
-
-    public abstract MovieDao movieDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
@@ -32,4 +31,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract MovieDao movieDao();
 }
