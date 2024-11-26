@@ -18,6 +18,7 @@ import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie.MovieListFragment;
+import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         adapter.addFragment(new MovieListFragment(), "Movies");
         adapter.addFragment(new FavoriteMoviesFragment(), "Favorites");
-        adapter.addFragment(new Fragment(), "Blank");
+        adapter.addFragment(new SettingFragment(), "Setting");
         adapter.addFragment(new Fragment(), "Blank");
         viewPager.setAdapter(adapter);
 

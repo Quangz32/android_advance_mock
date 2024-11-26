@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OJT.AADA.Assignment12"
+rootProject.name = "OJT.AADA.MOCK"
 include ':app'

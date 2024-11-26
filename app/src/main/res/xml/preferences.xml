@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="filter"
+        android:title="Filter">
+
+        <ListPreference
+            android:key="category"
+            android:title="Category"
+            android:summary="Select category"
+            android:entries="@array/category_entries"
+            android:entryValues="@array/category_entries"
+            android:defaultValue="Popular" />
+
+
+        <SeekBarPreference
+            android:key="movie_rate"
+            android:title="Movie Rate"
+            android:min="0"
+            android:max="5"
+            android:defaultValue="2"
+            />
+
+
+
+        <EditTextPreference
+            android:key="release_year"
+            android:title="Release Year"
+            android:summary="Enter release year" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="sort"
+        android:title="Sort">
+
+        <ListPreference
+            android:key="sort_by"
+            android:title="Sort By"
+            android:summary="summary"
+            android:entries="@array/sort_by_entries"
+            android:entryValues="@array/sort_by_entries"
+            android:defaultValue="Rating"
+            />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

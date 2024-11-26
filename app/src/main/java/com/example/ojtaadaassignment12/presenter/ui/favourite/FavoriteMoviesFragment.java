@@ -78,6 +78,7 @@ public class FavoriteMoviesFragment extends Fragment {
         viewModel.fetchFavoriteMovies();
         viewModel.getFavoriteMovies().observe(getViewLifecycleOwner(), movies -> {
             adapter.setMovies(movies);
+            adapter.notifyDataSetChanged();
         });
     }
 

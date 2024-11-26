@@ -63,13 +63,13 @@ public class MovieListFragment extends Fragment {
 
             @Override
             public void onStarClicked(Movie movie, int position) {
-                adapter.notifyItemChanged(position);
                 Log.d("qz.star.clicked", movie.getTitle());
                 if (movie.isFavorite()) {
                     favoriteViewModel.removeFromFavorites(movie);
                 } else {
                     favoriteViewModel.addToFavorites(movie);
                 }
+                adapter.notifyItemChanged(position);
             }
         });
 
