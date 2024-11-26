@@ -10,8 +10,10 @@ import com.example.ojtaadaassignment12.data.mapper.MovieMapper;
 import com.example.ojtaadaassignment12.data.remote.api.MovieApi;
 import com.example.ojtaadaassignment12.data.repository.FavoriteMovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryImpl;
+import com.example.ojtaadaassignment12.data.repository.SettingRepositoryImpl;
 import com.example.ojtaadaassignment12.domain.repository.FavoriteMovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
+import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 
 import javax.inject.Singleton;
 
@@ -43,6 +45,12 @@ public class RepositoryModule {
     @Provides
     public FavoriteMovieRepository provideFavoriteMovieRepository(MovieDao movieDao, MovieMapper movieMapper) {
         return new FavoriteMovieRepositoryImpl(movieDao, movieMapper);
+    }
+
+    @Singleton
+    @Provides
+    public SettingRepository provideSettingRepository(Context context) {
+        return new SettingRepositoryImpl(context);
     }
 }
 

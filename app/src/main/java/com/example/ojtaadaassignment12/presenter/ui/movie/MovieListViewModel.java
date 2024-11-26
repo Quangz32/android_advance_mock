@@ -52,11 +52,11 @@ public class MovieListViewModel extends ViewModel {
         return errorMessage;
     }
 
-    public void fetchMovies(String apiKey) {
+    public void fetchMovies(String category, String apiKey, int page) {
         isLoading.setValue(true);
 
         disposables.add(
-                getMoviesUC.invoke("popular", apiKey, 1)
+                getMoviesUC.invoke(category, apiKey, page)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .flatMap(movies -> {

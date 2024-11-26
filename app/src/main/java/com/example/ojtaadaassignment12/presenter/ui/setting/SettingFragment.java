@@ -1,62 +1,106 @@
 package com.example.ojtaadaassignment12.presenter.ui.setting;
 
 import android.os.Bundle;
-import android.util.Log;
 
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
+import androidx.preference.SeekBarPreference;
 
+import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.R;
+
+import javax.inject.Inject;
 
 public class SettingFragment extends PreferenceFragmentCompat {
 
+    @Inject
+    SettingViewModel settingViewModel;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
-        // Lấy các Preference cần cập nhật summary
+//        settingViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
+        ((App) requireActivity().getApplication()).getAppComponent().inject(this);
+
+        settingViewModel.loadSettings();
+
+        setupPreferenceChangeListeners();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Quan sát LiveData khi Fragment đã có View
+        settingViewModel.getCategoryLiveData().observe(getViewLifecycleOwner(), category -> {
+            ListPreference categoryPreference = findPreference("category");
+            if (categoryPreference != null) {
+                categoryPreference.setSummary(category);
+            }
+        });
+
+        settingViewModel.getMovieRateLiveData().observe(getViewLifecycleOwner(), rate -> {
+            SeekBarPreference movieRatePreference = findPreference("movie_rate");
+            if (movieRatePreference != null) {
+                movieRatePreference.setSummary(String.valueOf(rate));
+            }
+        });
+
+        settingViewModel.getReleaseYearLiveData().observe(getViewLifecycleOwner(), year -> {
+            EditTextPreference releaseYearPreference = findPreference("release_year");
+            if (releaseYearPreference != null) {
+                releaseYearPreference.setSummary(year);
+            }
+        });
+
+        settingViewModel.getSortByLiveData().observe(getViewLifecycleOwner(), sortBy -> {
+            ListPreference sortByPreference = findPreference("sort_by");
+            if (sortByPreference != null) {
+                sortByPreference.setSummary(sortBy);
+            }
+        });
+    }
+
+    private void setupPreferenceChangeListeners() {
         ListPreference categoryPreference = findPreference("category");
-        Preference movieRatePreference = findPreference("movie_rate");
-        Preference releaseYearPreference = findPreference("release_year");
+        SeekBarPreference movieRatePreference = findPreference("movie_rate");
+        EditTextPreference releaseYearPreference = findPreference("release_year");
         ListPreference sortByPreference = findPreference("sort_by");
 
-        // Thiết lập summary cho các Preference
-        PreferenceManager.getDefaultSharedPreferences(requireContext()).getAll();
-        if (categoryPreference == null || movieRatePreference == null ||
-                releaseYearPreference == null || sortByPreference == null) {
-            Log.d("logd.Setting", "nulllll");
-            return;
+        if (categoryPreference != null) {
+            categoryPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                settingViewModel.saveCategory((String) newValue);
+                categoryPreference.setSummary((CharSequence) newValue);
+                return true;
+            });
         }
 
-        categoryPreference.setSummary(categoryPreference.getEntries()[categoryPreference.findIndexOfValue(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("category", "Popular Movies"))]);
-        movieRatePreference.setSummary(String.valueOf(PreferenceManager.getDefaultSharedPreferences(requireContext()).getInt("movie_rate", 0)));
-        releaseYearPreference.setSummary(String.valueOf(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("release_year", "")));
-        sortByPreference.setSummary(sortByPreference.getEntries()[sortByPreference.findIndexOfValue(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("sort_by", "Release Date"))]);
+        if (movieRatePreference != null) {
+            movieRatePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                settingViewModel.saveMovieRate((Integer) newValue);
+                movieRatePreference.setSummary(String.valueOf(newValue));
+                return true;
+            });
+        }
 
-        // Thiết lập listener cho mỗi Preference để cập nhật summary
-        categoryPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            categoryPreference.setSummary(categoryPreference.getEntries()[categoryPreference.findIndexOfValue((String) newValue)]);
-            return true;
-        });
+        if (releaseYearPreference != null) {
+            releaseYearPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                settingViewModel.saveReleaseYear((String) newValue);
+                releaseYearPreference.setSummary((CharSequence) newValue);
+                return true;
+            });
+        }
 
-        movieRatePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            movieRatePreference.setSummary(String.valueOf(newValue));
-            return true;
-        });
-
-        releaseYearPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            releaseYearPreference.setSummary(String.valueOf(newValue));
-            return true;
-        });
-
-        sortByPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            sortByPreference.setSummary(sortByPreference.getEntries()[sortByPreference.findIndexOfValue((String) newValue)]);
-            return true;
-        });
-
-
+        if (sortByPreference != null) {
+            sortByPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                settingViewModel.saveSortBy((String) newValue);
+                sortByPreference.setSummary((CharSequence) newValue);
+                return true;
+            });
+        }
     }
 }
+
+

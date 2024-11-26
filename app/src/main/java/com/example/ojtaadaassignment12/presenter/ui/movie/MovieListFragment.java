@@ -22,8 +22,7 @@ import javax.inject.Inject;
 
 @SuppressLint("NotifyDataSetChanged")
 public class MovieListFragment extends Fragment {
-    //    @Inject
-//    GetMoviesUseCase getMoviesUseCase;
+
     @Inject
     MovieListViewModel viewModel;
 
@@ -58,12 +57,12 @@ public class MovieListFragment extends Fragment {
         adapter.setMovieItemCallback(new MovieAdapter.MovieItemCallback() {
             @Override
             public void onMovieClicked(Movie movie, int position) {
-                Log.d("qz.movie.clicked", movie.getTitle());
+                Log.d("logd.movie.clicked", movie.getTitle());
             }
 
             @Override
             public void onStarClicked(Movie movie, int position) {
-                Log.d("qz.star.clicked", movie.getTitle());
+                Log.d("logd.star.clicked", movie.getTitle());
                 if (movie.isFavorite()) {
                     favoriteViewModel.removeFromFavorites(movie);
                 } else {
@@ -78,8 +77,7 @@ public class MovieListFragment extends Fragment {
     }
 
     private void fetchAndObserveViewModel() {
-        viewModel.fetchMovies("e7631ffcb8e766993e5ec0c1f4245f93");
-
+        viewModel.fetchMovies("popular", "e7631ffcb8e766993e5ec0c1f4245f93", 1);
         //Observe MovieListViewModel
 
         viewModel.getMoviesLiveData().observe(getViewLifecycleOwner(), movies -> {
