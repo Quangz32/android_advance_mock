@@ -1,17 +1,12 @@
 package com.example.ojtaadaassignment12.presenter.ui.setting;
 
 import android.os.Bundle;
+import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.ojtaadaassignment12.R;
 
@@ -31,7 +26,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
         // Thiết lập summary cho các Preference
         PreferenceManager.getDefaultSharedPreferences(requireContext()).getAll();
         if (categoryPreference == null || movieRatePreference == null ||
-                releaseYearPreference == null || sortByPreference == null){
+                releaseYearPreference == null || sortByPreference == null) {
             Log.d("logd.Setting", "nulllll");
             return;
         }

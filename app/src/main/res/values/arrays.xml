@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="category_entries" >
+    <string-array name="category_entries">
         <item>Popular</item>
         <item>Top Rated</item>
         <item>Upcoming</item>
         <item>Now Playing</item>
     </string-array>
-    <string-array name="sort_by_entries" >
+    <string-array name="sort_by_entries">
         <item>Rating</item>
         <item>Release Date</item>
     </string-array>

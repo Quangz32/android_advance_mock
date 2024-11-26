@@ -18,7 +18,7 @@ public class GetMoviesUseCase {
         this.movieRepository = movieRepository;
     }
 
-    public Observable<List<Movie>> invoke(String apiKey) {
-        return movieRepository.getPopularMovies(apiKey);
+    public Observable<List<Movie>> invoke(String category, String apiKey, int page) {
+        return movieRepository.getMovies(category, apiKey, page);
     }
 }

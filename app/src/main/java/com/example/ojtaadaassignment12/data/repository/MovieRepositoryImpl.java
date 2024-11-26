@@ -25,13 +25,11 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Observable<List<Movie>> getPopularMovies(String apiKey) {
-        return movieApi.getPopularMovies(apiKey)
-                .map(movieResponse -> {
-                    List<MovieDto> movieDtos = movieResponse.getResults();
+    public Observable<List<Movie>> getMovies(String category, String apiKey, int page) {
+        return movieApi.getMovies(category, apiKey, page)
+                .map(response -> {
+                    List<MovieDto> movieDtos = response.getResults();
                     return movieMapper.mapDtoListToDomainList(movieDtos);
                 });
     }
-
-
 }

@@ -56,7 +56,7 @@ public class MovieListViewModel extends ViewModel {
         isLoading.setValue(true);
 
         disposables.add(
-                getMoviesUC.invoke(apiKey)
+                getMoviesUC.invoke("popular", apiKey, 1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .flatMap(movies -> {

@@ -7,5 +7,5 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface MovieRepository {
-    Observable<List<Movie>> getPopularMovies(String apiKey);
+    Observable<List<Movie>> getMovies(String category, String apiKey, int page);
 }

@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:key="filter"
         android:title="Filter">
 
         <ListPreference
-            android:key="category"
-            android:title="Category"
-            android:summary="Select category"
+            android:defaultValue="Popular"
             android:entries="@array/category_entries"
             android:entryValues="@array/category_entries"
-            android:defaultValue="Popular" />
+            android:key="category"
+            android:summary="Select category"
+            android:title="Category" />
 
 
         <SeekBarPreference
-            android:key="movie_rate"
-            android:title="Movie Rate"
-            android:min="0"
-            android:max="5"
             android:defaultValue="2"
-            />
-
+            android:key="movie_rate"
+            android:max="5"
+            android:min="0"
+            android:title="Movie Rate" />
 
 
         <EditTextPreference
             android:key="release_year"
-            android:title="Release Year"
-            android:summary="Enter release year" />
+            android:summary="Enter release year"
+            android:title="Release Year" />
 
     </PreferenceCategory>
 
@@ -37,13 +34,12 @@
         android:title="Sort">
 
         <ListPreference
-            android:key="sort_by"
-            android:title="Sort By"
-            android:summary="summary"
+            android:defaultValue="Rating"
             android:entries="@array/sort_by_entries"
             android:entryValues="@array/sort_by_entries"
-            android:defaultValue="Rating"
-            />
+            android:key="sort_by"
+            android:summary="summary"
+            android:title="Sort By" />
 
     </PreferenceCategory>
 
