@@ -2,15 +2,12 @@ package com.example.ojtaadaassignment12.presenter.ui.movie;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.PagingData;
 
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.domain.usecase.movie.GetMoviePagingDataUseCase;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,7 +24,6 @@ public class MovieListViewModel extends ViewModel {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    private final MutableLiveData<List<Movie>> moviesLiveData = new MutableLiveData<>();
 
     private final MutableLiveData<PagingData<Movie>> moviesPagingLiveData = new MutableLiveData<>();
 
@@ -38,13 +34,12 @@ public class MovieListViewModel extends ViewModel {
         this.getMoviePagingDataUC = getMoviePagingDataUC;
     }
 
-    public LiveData<List<Movie>> getMoviesLiveData() {
-        return moviesLiveData;
+
+    public MutableLiveData<PagingData<Movie>> getMoviePagingData() {
+        return moviesPagingLiveData;
     }
 
-
-    // Phương thức để lấy dữ liệu phim dạng phân trang từ Repository và phát qua LiveData
-    public MutableLiveData<PagingData<Movie>> getMoviePagingData() {
+    public void fetchMovies() {
         // Tạo Disposable để quản lý luồng dữ liệu lấy từ Repository
         Disposable disposable = getMoviePagingDataUC.get()
                 .subscribeOn(Schedulers.io())                      // Chạy luồng lấy dữ liệu trên luồng I/O
@@ -56,13 +51,12 @@ public class MovieListViewModel extends ViewModel {
 
         // Thêm Disposable vào CompositeDisposable để quản lý
         disposables.add(disposable);
-
-        // Trả về LiveData cho UI để quan sát
-        return moviesPagingLiveData;
     }
 
-//    public void fetchMovies(String category, String apiKey, int page) {
-//        isLoading.setValue(true);
+//    public void toggleFavorite(int position){
+//        Movie movie = moviesLiveData.getValue().get(position);
+//        movie.setFavorite(!movie.isFavorite());
+//        moviesLiveData.getValue().set(position, movie);
 //    }
 
     @Override

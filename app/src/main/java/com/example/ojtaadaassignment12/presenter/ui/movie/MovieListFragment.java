@@ -2,6 +2,7 @@ package com.example.ojtaadaassignment12.presenter.ui.movie;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryPaging;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieListBinding;
-import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
+import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.adapter.MoviePagingAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
@@ -38,7 +39,7 @@ public class MovieListFragment extends Fragment {
 
     //    private MovieListViewModel viewModel;
     private FragmentMovieListBinding binding;
-    private MovieAdapter adapter;
+    private MoviePagingAdapter moviePagingAdapter;
 
     @Nullable
     @Override
@@ -53,14 +54,35 @@ public class MovieListFragment extends Fragment {
         // Inject dependencies
         ((App) requireActivity().getApplication()).getAppComponent().inject(this);
         setupRecyclerView();
+        setupViewModel();
     }
 
-    private void setupRecyclerView() {
-        MoviePagingAdapter moviePagingAdapter = new MoviePagingAdapter();
-        binding.recyclerMovies.setLayoutManager(new LinearLayoutManager(getContext()));
+    private void setupViewModel() {
+        viewModel.fetchMovies();
+
         viewModel.getMoviePagingData().observe(this, pagingData -> {
             moviePagingAdapter.submitData(getLifecycle(), pagingData);
         });
+    }
+
+    private void setupRecyclerView() {
+        moviePagingAdapter = new MoviePagingAdapter();
+        moviePagingAdapter.setMovieActionListener(new MoviePagingAdapter.MovieActionListener() {
+            @Override
+            public void onMovieClick(Movie movie, int position) {
+                Log.d("logd.movie.click", movie.toString());
+            }
+
+            @Override
+            public void onStarClick(Movie movie, int position) {
+                Log.d("logd.star.click", movie.toString());
+
+                favoriteViewModel.toggleFavorite(movie); //Cập nhật trong DB
+                //đã cập nhật dao diện qua Adapter
+            }
+        });
+
+        binding.recyclerMovies.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerMovies.setAdapter(moviePagingAdapter);
     }
 

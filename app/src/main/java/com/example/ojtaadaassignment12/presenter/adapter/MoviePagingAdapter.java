@@ -12,8 +12,15 @@ import com.example.ojtaadaassignment12.domain.model.Movie;
 
 public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.ViewHolder> {
 
+
+    private MovieActionListener listener;
+
     public MoviePagingAdapter() {
         super(Movie.DIFF_CALLBACK);
+    }
+
+    public void setMovieActionListener(MovieActionListener callBack) {
+        this.listener = callBack;
     }
 
     @NonNull
@@ -28,8 +35,14 @@ public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.Vi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Movie movie = getItem(position);
         if (movie != null) {
-            ((MovieViewHolder) holder).bindView(movie);
+            ((MovieViewHolder) holder).bindView(movie, position);
         }
+    }
+
+    public interface MovieActionListener {
+        void onMovieClick(Movie movie, int position);
+
+        void onStarClick(Movie movie, int position);
     }
 
     // ViewHolder cho các mục Movie
@@ -41,9 +54,24 @@ public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.Vi
             this.binding = binding;
         }
 
-        public void bindView(Movie movie) {
+        public void bindView(Movie movie, int position) {
             // Gắn dữ liệu Movie vào View
             binding.setMovie(movie);
+
+            binding.getRoot().setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onMovieClick(movie, position);
+                }
+            });
+
+            binding.imgStar.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onStarClick(movie, position);
+                }
+
+                movie.setFavorite(!movie.isFavorite());
+                notifyItemChanged(position);
+            });
         }
     }
 }

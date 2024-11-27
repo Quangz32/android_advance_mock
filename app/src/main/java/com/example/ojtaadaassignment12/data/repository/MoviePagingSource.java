@@ -60,7 +60,6 @@ public class MoviePagingSource extends RxPagingSource<Integer, Movie> {
     }
 
 
-
     @Nullable
     @Override
     public Integer getRefreshKey(@NonNull PagingState<Integer, Movie> pagingState) {

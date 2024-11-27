@@ -67,6 +67,14 @@ public class FavoriteMoviesViewModel extends ViewModel {
         );
     }
 
+    public void toggleFavorite(Movie movie) {
+        if (movie.isFavorite()) {
+            removeFromFavorites(movie);
+        } else {
+            addToFavorites(movie);
+        }
+    }
+
 
     public void removeFromFavorites(Movie movie) {
         disposables.add(
