@@ -45,6 +45,22 @@ public class SettingViewModel extends ViewModel {
         return sortByLiveData;
     }
 
+    public void setCategoryLiveData(String category) {
+        categoryLiveData.setValue(category);
+    }
+
+    public void setMovieRateLiveData(int rate) {
+        movieRateLiveData.setValue(rate);
+    }
+
+    public void setReleaseYearLiveData(String year) {
+        releaseYearLiveData.setValue(year);
+    }
+
+    public void setSortByLiveData(String sortBy) {
+        sortByLiveData.setValue(sortBy);
+    }
+
     public void loadSettings() {
         categoryLiveData.setValue(getSettingUseCase.getCategory());
         movieRateLiveData.setValue(getSettingUseCase.getMovieRate());

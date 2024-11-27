@@ -17,6 +17,7 @@ import com.example.ojtaadaassignment12.databinding.FragmentMovieListBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
 
 import javax.inject.Inject;
 
@@ -28,6 +29,9 @@ public class MovieListFragment extends Fragment {
 
     @Inject
     FavoriteMoviesViewModel favoriteViewModel;
+
+    @Inject
+    SettingViewModel settingViewModel;
 
     //    private MovieListViewModel viewModel;
     private FragmentMovieListBinding binding;

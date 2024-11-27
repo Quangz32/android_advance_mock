@@ -9,7 +9,11 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, PreferencesModule.class, NetworkModule.class, RepositoryModule.class})
+@Component(modules = {
+        AppModule.class,
+        PreferencesModule.class,
+        NetworkModule.class,
+        RepositoryModule.class})
 public interface AppComponent {
     void inject(SettingFragment fragment);
 
