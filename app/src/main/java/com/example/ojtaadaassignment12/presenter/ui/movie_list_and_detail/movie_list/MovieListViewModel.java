@@ -1,4 +1,4 @@
-package com.example.ojtaadaassignment12.presenter.ui.movie;
+package com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list;
 
 import android.util.Log;
 
