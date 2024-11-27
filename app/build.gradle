@@ -66,6 +66,16 @@ dependencies {
     //Preference (Setting)
     implementation "androidx.preference:preference:1.2.1"
 
+    //Paging
+    implementation("androidx.paging:paging-common:3.3.4")
+    implementation "androidx.paging:paging-runtime:3.3.4"
+    implementation "androidx.paging:paging-rxjava3:3.3.4"
+
+//    paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntime" }
+//    paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+//    paging-rxjava2 = { group = "androidx.paging", name = "paging-rxjava2", version.ref = "pagingRxjava2" }
+
+
 //
 //    // Unit Testing
 //    testImplementation 'junit:junit:4.13.2'

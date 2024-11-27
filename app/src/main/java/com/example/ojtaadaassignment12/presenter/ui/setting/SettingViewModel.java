@@ -33,28 +33,28 @@ public class SettingViewModel extends ViewModel {
         return categoryLiveData;
     }
 
-    public LiveData<Integer> getMovieRateLiveData() {
-        return movieRateLiveData;
-    }
-
-    public LiveData<String> getReleaseYearLiveData() {
-        return releaseYearLiveData;
-    }
-
-    public LiveData<String> getSortByLiveData() {
-        return sortByLiveData;
-    }
-
     public void setCategoryLiveData(String category) {
         categoryLiveData.setValue(category);
+    }
+
+    public LiveData<Integer> getMovieRateLiveData() {
+        return movieRateLiveData;
     }
 
     public void setMovieRateLiveData(int rate) {
         movieRateLiveData.setValue(rate);
     }
 
+    public LiveData<String> getReleaseYearLiveData() {
+        return releaseYearLiveData;
+    }
+
     public void setReleaseYearLiveData(String year) {
         releaseYearLiveData.setValue(year);
+    }
+
+    public LiveData<String> getSortByLiveData() {
+        return sortByLiveData;
     }
 
     public void setSortByLiveData(String sortBy) {

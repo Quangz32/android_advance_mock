@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MovieRepositoryImpl implements MovieRepository {
 
@@ -25,7 +25,7 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Observable<List<Movie>> getMovies(String category, String apiKey, int page) {
+    public Single<List<Movie>> getMovies(String category, String apiKey, int page) {
         return movieApi.getMovies(category, apiKey, page)
                 .map(response -> {
                     List<MovieDto> movieDtos = response.getResults();

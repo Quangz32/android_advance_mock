@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class GetMoviesUseCase {
 
@@ -18,7 +18,7 @@ public class GetMoviesUseCase {
         this.movieRepository = movieRepository;
     }
 
-    public Observable<List<Movie>> invoke(String category, String apiKey, int page) {
+    public Single<List<Movie>> invoke(String category, String apiKey, int page) {
         return movieRepository.getMovies(category, apiKey, page);
     }
 }

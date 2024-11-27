@@ -2,7 +2,6 @@ package com.example.ojtaadaassignment12.presenter.ui.movie;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ojtaadaassignment12.App;
+import com.example.ojtaadaassignment12.data.repository.MovieRepositoryPaging;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieListBinding;
-import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
+import com.example.ojtaadaassignment12.presenter.adapter.MoviePagingAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
 
@@ -33,6 +33,9 @@ public class MovieListFragment extends Fragment {
     @Inject
     SettingViewModel settingViewModel;
 
+    @Inject
+    MovieRepositoryPaging movieRepositoryPaging;
+
     //    private MovieListViewModel viewModel;
     private FragmentMovieListBinding binding;
     private MovieAdapter adapter;
@@ -47,56 +50,18 @@ public class MovieListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Inject dependencies
         ((App) requireActivity().getApplication()).getAppComponent().inject(this);
-
         setupRecyclerView();
-        fetchAndObserveViewModel();
-
     }
 
     private void setupRecyclerView() {
-        adapter = new MovieAdapter(null, false);
-        adapter.setMovieItemCallback(new MovieAdapter.MovieItemCallback() {
-            @Override
-            public void onMovieClicked(Movie movie, int position) {
-                Log.d("logd.movie.clicked", movie.getTitle());
-            }
-
-            @Override
-            public void onStarClicked(Movie movie, int position) {
-                Log.d("logd.star.clicked", movie.getTitle());
-                if (movie.isFavorite()) {
-                    favoriteViewModel.removeFromFavorites(movie);
-                } else {
-                    favoriteViewModel.addToFavorites(movie);
-                }
-                adapter.notifyItemChanged(position);
-            }
-        });
-
+        MoviePagingAdapter moviePagingAdapter = new MoviePagingAdapter();
         binding.recyclerMovies.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerMovies.setAdapter(adapter);
-    }
-
-    private void fetchAndObserveViewModel() {
-        viewModel.fetchMovies("popular", "e7631ffcb8e766993e5ec0c1f4245f93", 1);
-        //Observe MovieListViewModel
-
-        viewModel.getMoviesLiveData().observe(getViewLifecycleOwner(), movies -> {
-            adapter.setMovies(movies);
-            adapter.notifyDataSetChanged();
+        viewModel.getMoviePagingData().observe(this, pagingData -> {
+            moviePagingAdapter.submitData(getLifecycle(), pagingData);
         });
-
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
-            binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        });
-
-        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            binding.textError.setVisibility(error != null ? View.VISIBLE : View.GONE);
-            binding.textError.setText(error);
-        });
+        binding.recyclerMovies.setAdapter(moviePagingAdapter);
     }
 
     @Override

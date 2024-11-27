@@ -1,7 +1,22 @@
 package com.example.ojtaadaassignment12.domain.model;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+
 public class Movie {
 
+    // Khai báo DIFF_CALLBACK giúp DiffUtil xác định sự khác biệt giữa hai đối tượng Movie
+    public static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK = new DiffUtil.ItemCallback<Movie>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Movie oldMovie, @NonNull Movie newMovie) {
+            return oldMovie.areContentsTheSame(newMovie);
+        }
+    };
     private final int id;
     private final String title;
     private final String overview;
@@ -71,5 +86,16 @@ public class Movie {
 //                ", adult=" + adult +
                 ", isFavorite=" + isFavorite +
                 '}';
+    }
+
+    public boolean areContentsTheSame(Movie movieToCompare) {
+        return this.adult == movieToCompare.adult &&
+                this.title.equals(movieToCompare.title) &&
+                this.posterPath.equals(movieToCompare.posterPath) &&
+                this.overview.equals(movieToCompare.overview) &&
+                this.releaseDate.equals(movieToCompare.releaseDate) &&
+                this.voteAverage == movieToCompare.voteAverage &&
+                this.isFavorite == movieToCompare.isFavorite;
+
     }
 }
