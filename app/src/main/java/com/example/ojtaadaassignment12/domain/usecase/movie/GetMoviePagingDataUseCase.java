@@ -8,6 +8,7 @@ import com.example.ojtaadaassignment12.domain.model.Movie;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Flowable;
+import kotlinx.coroutines.CoroutineScope;
 
 public class GetMoviePagingDataUseCase {
     private final MovieRepositoryPaging movieRepositoryPaging;
@@ -17,8 +18,8 @@ public class GetMoviePagingDataUseCase {
         this.movieRepositoryPaging = movieRepositoryPaging;
     }
 
-    public Flowable<PagingData<Movie>> get() {
-        return movieRepositoryPaging.getMovies();
+    public Flowable<PagingData<Movie>> get(CoroutineScope coroutineScope) {
+        return movieRepositoryPaging.getMovies(coroutineScope);
     }
 
 }

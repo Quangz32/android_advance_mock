@@ -1,6 +1,7 @@
 package com.example.ojtaadaassignment12.data.di;
 
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
+import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 
@@ -20,4 +21,7 @@ public interface AppComponent {
     void inject(MovieListFragment fragment);
 
     void inject(FavoriteMoviesFragment fragment);
+
+    void inject(ListAndDetailContainerFragment fragment);
+
 }

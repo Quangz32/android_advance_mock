@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.ui.movie_list_and_detail.ListAndDetailContainerFragment">
+    tools:context=".presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- NavHostFragment để chứa các fragment con -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/list_and_detail_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/movie_list_and_detail_navigation" /> <!-- Cấu hình NavHostFragment để nhận back press -->
 </FrameLayout>

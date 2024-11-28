@@ -10,14 +10,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ojtaadaassignment12.App;
+import com.example.ojtaadaassignment12.R;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryPaging;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieListBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.adapter.MoviePagingAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
 
 import javax.inject.Inject;
@@ -71,12 +76,17 @@ public class MovieListFragment extends Fragment {
             @Override
             public void onMovieClick(Movie movie, int position) {
                 Log.d("logd.movie.click", movie.toString());
+
+                MovieDetailViewModel movieDetailViewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
+                movieDetailViewModel.getMovieLiveData().setValue(movie);
+                NavController navController = Navigation.findNavController(requireView());
+
+                navController.navigate(R.id.movieDetailFragment);
             }
 
             @Override
             public void onStarClick(Movie movie, int position) {
                 Log.d("logd.star.click", movie.toString());
-
                 favoriteViewModel.toggleFavorite(movie); //Cập nhật trong DB
                 //đã cập nhật dao diện qua Adapter
             }

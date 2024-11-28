@@ -12,6 +12,7 @@ import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Flowable;
+import kotlinx.coroutines.CoroutineScope;
 
 public class MovieRepositoryPaging {
 
@@ -28,7 +29,7 @@ public class MovieRepositoryPaging {
     }
 
     // Phương thức trả về dữ liệu phim dạng phân trang dưới dạng Flowable
-    public Flowable<PagingData<Movie>> getMovies() {
+    public Flowable<PagingData<Movie>> getMovies(CoroutineScope coroutineScope) {
         // Tạo một đối tượng Pager để cấu hình việc tải dữ liệu phân trang
         Pager<Integer, Movie> pager = new Pager<>(
                 new PagingConfig(
@@ -44,6 +45,7 @@ public class MovieRepositoryPaging {
         );
 
         // Chuyển đổi Pager thành Flowable bằng cách sử dụng PagingRx
-        return PagingRx.getFlowable(pager);
+        return PagingRx.cachedIn(PagingRx.getFlowable(pager), coroutineScope);
+//        return PagingRx.getFlowable(pager);
     }
 }

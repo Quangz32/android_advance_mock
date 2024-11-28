@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelKt;
 import androidx.paging.PagingData;
 
 import com.example.ojtaadaassignment12.domain.model.Movie;
@@ -41,7 +42,7 @@ public class MovieListViewModel extends ViewModel {
 
     public void fetchMovies() {
         // Tạo Disposable để quản lý luồng dữ liệu lấy từ Repository
-        Disposable disposable = getMoviePagingDataUC.get()
+        Disposable disposable = getMoviePagingDataUC.get(ViewModelKt.getViewModelScope(this))
                 .subscribeOn(Schedulers.io())                      // Chạy luồng lấy dữ liệu trên luồng I/O
                 .observeOn(AndroidSchedulers.mainThread())         // Quan sát và cập nhật dữ liệu trên luồng chính
                 .subscribe(

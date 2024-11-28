@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.ojtaadaassignment12.R;
@@ -17,8 +19,7 @@ import com.example.ojtaadaassignment12.databinding.ActivityMainBinding;
 import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
-import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailFragment;
-import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListFragment;
+import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -29,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
 
-
     private ActivityMainBinding binding;
+
+    private NavController navController1;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,31 +41,51 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Initialize ViewModel
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
         drawerLayout = binding.drawerLayout;
         toolbar = binding.toolBar;
         tabLayout = binding.tabLayout;
         viewPager = binding.viewPager;
 
-        setupTabAndPage();
         setupToolbarAndDrawer();
-
+        setupTabAndPage();
 
     }
 
     private void setupToolbarAndDrawer() {
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        mainViewModel.getTab1ShowingDetail().observe(this, showingDetail -> {
+            setToolbarNavigationIcon(showingDetail ?
+                    R.drawable.baseline_arrow_back_24 :
+                    R.drawable.baseline_toggle_24);
+        });
+
+        toolbar.setNavigationOnClickListener(view -> {
+            if (Boolean.TRUE.equals(mainViewModel.getTab1ShowingDetail().getValue())) {
+                navController1.navigate(R.id.movieListFragment);
+            } else {
+                drawerLayout.openDrawer(binding.navigationView);
+            }
+        });
+
+    }
+
+    public void setToolbarNavigationIcon(int iconResId) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true); // Hiển thị nút back
+            actionBar.setHomeAsUpIndicator(iconResId); // Tùy chỉnh icon
+        }
     }
 
     private void setupTabAndPage() {
-        // Setup ViewPager2 Adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
 //        adapter.addFragment(new MovieListFragment(), "Movies");
-        adapter.addFragment(new MovieDetailFragment(), "detail");
+//        adapter.addFragment(new MovieDetailFragment(), "detail");
+        adapter.addFragment(new ListAndDetailContainerFragment(), "Container");
         adapter.addFragment(new FavoriteMoviesFragment(), "Favorites");
         adapter.addFragment(new SettingFragment(), "Setting");
         adapter.addFragment(new Fragment(), "Blank");
@@ -84,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         ).attach();
     }
 
+    public void setNavControllerTab1(NavController navController) {
+        this.navController1 = navController;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_nav, menu);
@@ -100,12 +127,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-//                FavouriteFragment ff = (FavouriteFragment) myFragments.get(1);
-//                ff.doSearch(newText);
                 return false;
             }
         });
         return true;
     }
+
+
 }

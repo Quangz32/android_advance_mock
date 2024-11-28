@@ -71,17 +71,13 @@ dependencies {
     implementation "androidx.paging:paging-runtime:3.3.4"
     implementation "androidx.paging:paging-rxjava3:3.3.4"
 
-//    paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntime" }
-//    paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
-//    paging-rxjava2 = { group = "androidx.paging", name = "paging-rxjava2", version.ref = "pagingRxjava2" }
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
+    //Navigation
+    def nav_version = "2.5.3"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 
-//
-//    // Unit Testing
-//    testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-//
 //    // Dagger dependencies
     implementation 'com.google.dagger:dagger:2.52'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.52'
