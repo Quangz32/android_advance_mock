@@ -16,12 +16,11 @@ import java.util.List;
 @SuppressLint("NotifyDataSetChanged")
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> movies;
     //    private List<Movie> favoriteMovies;
     private final boolean favoriteMode;   //Tất cả movie đều là Yêu thích
+    private List<Movie> movies;
 
 //    private int currentPosition;
-
     private MovieItemCallback callback;
 
     public MovieAdapter(List<Movie> movies, boolean favoriteMode) {

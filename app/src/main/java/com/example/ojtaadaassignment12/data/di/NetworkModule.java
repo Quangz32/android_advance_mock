@@ -1,5 +1,6 @@
 package com.example.ojtaadaassignment12.data.di;
 
+import com.example.ojtaadaassignment12.data.remote.api.CastAndCrewApi;
 import com.example.ojtaadaassignment12.data.remote.api.MovieApi;
 
 import java.util.concurrent.TimeUnit;
@@ -42,5 +43,11 @@ public class NetworkModule {
     @Provides
     public MovieApi provideMovieApi(Retrofit retrofit) {
         return retrofit.create(MovieApi.class);
+    }
+
+    @Singleton
+    @Provides
+    public CastAndCrewApi provideCastAndCrewApi(Retrofit retrofit) {
+        return retrofit.create(CastAndCrewApi.class);
     }
 }

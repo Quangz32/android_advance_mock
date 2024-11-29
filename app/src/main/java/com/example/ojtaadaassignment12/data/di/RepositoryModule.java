@@ -6,11 +6,15 @@ import androidx.room.Room;
 
 import com.example.ojtaadaassignment12.data.local.dao.MovieDao;
 import com.example.ojtaadaassignment12.data.local.database.AppDatabase;
+import com.example.ojtaadaassignment12.data.mapper.CastAndCrewMapper;
 import com.example.ojtaadaassignment12.data.mapper.MovieMapper;
+import com.example.ojtaadaassignment12.data.remote.api.CastAndCrewApi;
 import com.example.ojtaadaassignment12.data.remote.api.MovieApi;
+import com.example.ojtaadaassignment12.data.repository.CastAndCrewRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.FavoriteMovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.SettingRepositoryImpl;
+import com.example.ojtaadaassignment12.domain.repository.CastAndCrewRepository;
 import com.example.ojtaadaassignment12.domain.repository.FavoriteMovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
@@ -27,6 +31,12 @@ public class RepositoryModule {
     @Provides
     public MovieMapper provideMovieMapper() {
         return new MovieMapper();
+    }
+
+    @Singleton
+    @Provides
+    public CastAndCrewMapper provideCastAndCrewMapper() {
+        return new CastAndCrewMapper();
     }
 
     @Singleton
@@ -51,6 +61,14 @@ public class RepositoryModule {
     @Provides
     public SettingRepository provideSettingRepository(Context context) {
         return new SettingRepositoryImpl(context);
+    }
+
+    @Singleton
+    @Provides
+    public CastAndCrewRepository provideCastAndCrewRepository(
+            CastAndCrewApi api, CastAndCrewMapper mapper
+    ) {
+        return new CastAndCrewRepositoryImpl(api, mapper);
     }
 }
 

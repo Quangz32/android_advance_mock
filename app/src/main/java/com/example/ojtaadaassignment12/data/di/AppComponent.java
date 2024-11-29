@@ -17,6 +17,7 @@ import dagger.Component;
         PreferencesModule.class,
         NetworkModule.class,
         RepositoryModule.class})
+
 public interface AppComponent {
     void inject(MainActivity activity);
 

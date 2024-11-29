@@ -40,6 +40,9 @@ public class MovieListFragment extends Fragment {
     SettingViewModel settingViewModel;
 
     @Inject
+    MovieDetailViewModel movieDetailViewModel;
+
+    @Inject
     MovieRepositoryPaging movieRepositoryPaging;
 
     //    private MovieListViewModel viewModel;
@@ -77,8 +80,8 @@ public class MovieListFragment extends Fragment {
             public void onMovieClick(Movie movie, int position) {
                 Log.d("logd.movie.click", movie.toString());
 
-                MovieDetailViewModel movieDetailViewModel =
-                        new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
+//                MovieDetailViewModel movieDetailViewModel =
+//                        new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
                 movieDetailViewModel.getMovieLiveData().setValue(movie);
                 NavController navController = Navigation.findNavController(requireView());
 
