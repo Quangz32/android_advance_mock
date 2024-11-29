@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ojtaadaassignment12.databinding.ItemMovieBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
+import com.example.ojtaadaassignment12.presenter.binding.BindingAdapters;
 
 public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.ViewHolder> {
 
@@ -69,11 +71,12 @@ public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.Vi
                     listener.onStarClick(movie, position);
                 }
 
+                movie.setFavorite(!movie.isFavorite());
+                BindingAdapters.setCustomStarTint(binding.imgStar, movie.isFavorite());
+
                 Log.d("logd.adapter.star.click", movie.toString());
 //                movie.setFavorite(!movie.isFavorite());
-                Movie movieX = getItem(position);
-                movieX.setFavorite(!movieX.isFavorite());
-                notifyItemChanged(position);
+
             });
         }
     }

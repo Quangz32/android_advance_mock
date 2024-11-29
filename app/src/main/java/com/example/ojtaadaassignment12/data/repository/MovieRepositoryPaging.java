@@ -51,11 +51,11 @@ public class MovieRepositoryPaging {
 
         Pager<Integer, Movie> pager = new Pager<>(
                 new PagingConfig(
-                        5,  // Số lượng item trên mỗi trang (pageSize)
-                        2,  // Số lượng item sẽ được tải trước khi người dùng cuộn đến cuối (prefetchDistance)
+                        10,  // Số lượng item trên mỗi trang (pageSize)
+                        5,  // Số lượng item sẽ được tải trước khi người dùng cuộn đến cuối (prefetchDistance)
                         false,  // false: Không hiển thị các item tạm thời trước khi tải dữ liệu hoàn chỉnh
-                        5,  // Số lượng item tải ban đầu (initialLoadSize)
-                        10  // Số lượng item tối đa mà Paging giữ trong bộ nhớ đệm (maxSize)
+                        10,  // Số lượng item tải ban đầu (initialLoadSize)
+                        20  // Số lượng item tối đa mà Paging giữ trong bộ nhớ đệm (maxSize)
                         // maxSize tiêu chuẩn = pageSize + (2 * prefetchDistance)
                 ),
                 () -> new MoviePagingSource(categoryMap.get(category), "e7631ffcb8e766993e5ec0c1f4245f93",

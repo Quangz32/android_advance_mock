@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieDetailBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
+import com.example.ojtaadaassignment12.presenter.binding.BindingAdapters;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
 
 import javax.inject.Inject;
@@ -50,13 +51,14 @@ public class MovieDetailFragment extends Fragment {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false);
 //        binding.setMovie(new Movie(10, "Hello", "Long overview", "/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg", "2020-11-11", 5.5f, false, true));
         binding.setLifecycleOwner(this);
+
         binding.imgStar.setOnClickListener(v -> {
-            Movie movie = viewModel.getMovieLiveData().getValue();
-//            favoriteMoviesViewModel.toggleFavorite(movie);
-            favoriteMoviesViewModel.toggleFavorite(movie);
-            viewModel.toggleFavorite();
-//            movie.setFavorite(!movie.isFavorite());
-//            viewModel.getMovieLiveData().setValue(movie);
+            favoriteMoviesViewModel.toggleFavorite(binding.getMovie());
+
+            binding.getMovie().setFavorite(!binding.getMovie().isFavorite());
+            BindingAdapters.setCustomStarTint(binding.imgStar, binding.getMovie().isFavorite());
+//            Movie movie = viewModel.getMovieLiveData().getValue();
+//            viewModel.toggleFavorite();
         });
         return binding.getRoot();
     }
