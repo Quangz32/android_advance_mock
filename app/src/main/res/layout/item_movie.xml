@@ -115,7 +115,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7.0/10.0"
+                customRating="@{movie.voteAverage}"
                 android:textColor="@color/orchid"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/rating_text"

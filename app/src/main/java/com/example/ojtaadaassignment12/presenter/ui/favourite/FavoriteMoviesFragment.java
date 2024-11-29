@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.databinding.FragmentFavoriteMoviesBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
+import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListViewModel;
@@ -34,6 +35,9 @@ public class FavoriteMoviesFragment extends Fragment {
     @Inject
     MovieDetailViewModel movieDetailViewModel;
 
+    @Inject
+    SettingRepository settingRepository;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,10 +54,6 @@ public class FavoriteMoviesFragment extends Fragment {
 
         setupRecyclerView();
         fetchAndObserveViewModel();
-
-        //Test thêm Favorite Movie
-//        viewModel.addToFavorites(
-//                new Movie(8, "Movie 1", "Description 1", "https://example.com", "2020-10-10", 5.0f, true));
     }
 
     private void setupRecyclerView() {
@@ -67,16 +67,17 @@ public class FavoriteMoviesFragment extends Fragment {
 
             @Override
             public void onStarClicked(Movie movie, int position) {
-                adapter.notifyItemChanged(position);
-                Log.d("qz.star.clicked", movie.getTitle());
                 viewModel.removeFromFavorites(movie);
                 adapter.notifyItemRemoved(position);
 
-                movieListViewModel.fetchMovies();   //Cho List fetch lai Movie
-
-                if (movieDetailViewModel.getMovieLiveData().getValue().getId() == movie.getId()){
+                //Update detail
+                Movie selectedMovie = movieDetailViewModel.getMovieLiveData().getValue();
+                if (selectedMovie != null && selectedMovie.getId() == movie.getId()) {
                     movieDetailViewModel.toggleFavorite();
                 }
+
+                //Update list (Re-fetch)
+                movieListViewModel.fetchMovies(settingRepository.getCategory());
             }
         });
 

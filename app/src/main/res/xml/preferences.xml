@@ -17,7 +17,7 @@
         <SeekBarPreference
             android:defaultValue="2"
             android:key="movie_rate"
-            android:max="5"
+            android:max="10"
             android:min="0"
             android:title="Movie Rate" />
 

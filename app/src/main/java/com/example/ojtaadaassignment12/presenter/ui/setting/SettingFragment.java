@@ -33,6 +33,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("logd.settingFrag.start", "start");
 
 //         Quan sát LiveData khi Fragment đã có View
         settingViewModel.getCategoryLiveData().observe(getViewLifecycleOwner(), category -> {

@@ -20,7 +20,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private final boolean favoriteMode;   //Tất cả movie đều là Yêu thích
     private List<Movie> movies;
 
-//    private int currentPosition;
+    //    private int currentPosition;
     private MovieItemCallback callback;
 
     public MovieAdapter(List<Movie> movies, boolean favoriteMode) {

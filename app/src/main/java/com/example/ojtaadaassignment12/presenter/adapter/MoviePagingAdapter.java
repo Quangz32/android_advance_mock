@@ -13,7 +13,6 @@ import com.example.ojtaadaassignment12.domain.model.Movie;
 
 public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.ViewHolder> {
 
-
     private MovieActionListener listener;
 
     public MoviePagingAdapter() {
@@ -78,7 +77,7 @@ public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.Vi
             });
         }
     }
-//
+
 //    private void removeFavoriteByMovieId(int movieId){
 //        for (int i= 0 ;i < getItemCount(); i++){
 //            Movie movie = getItem(i);

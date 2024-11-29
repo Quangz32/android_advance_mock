@@ -39,9 +39,10 @@ public class MovieListViewModel extends ViewModel {
         return moviesPagingLiveData;
     }
 
-    public void fetchMovies() {
+    public void fetchMovies(String category) {
         // Tạo Disposable để quản lý luồng dữ liệu lấy từ Repository
-        Disposable disposable = getMoviePagingDataUC.get(ViewModelKt.getViewModelScope(this))
+        Disposable disposable = getMoviePagingDataUC.get(
+                        category, ViewModelKt.getViewModelScope(this))
                 .subscribeOn(Schedulers.io())                      // Chạy luồng lấy dữ liệu trên luồng I/O
                 .observeOn(AndroidSchedulers.mainThread())         // Quan sát và cập nhật dữ liệu trên luồng chính
                 .subscribe(

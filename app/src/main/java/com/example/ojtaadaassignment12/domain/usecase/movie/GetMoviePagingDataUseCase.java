@@ -18,8 +18,8 @@ public class GetMoviePagingDataUseCase {
         this.movieRepositoryPaging = movieRepositoryPaging;
     }
 
-    public Flowable<PagingData<Movie>> get(CoroutineScope coroutineScope) {
-        return movieRepositoryPaging.getMovies(coroutineScope);
+    public Flowable<PagingData<Movie>> get(String category, CoroutineScope coroutineScope) {
+        return movieRepositoryPaging.getMovies(category, coroutineScope);
     }
 
 }
