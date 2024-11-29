@@ -10,10 +10,10 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.R;
 import com.example.ojtaadaassignment12.databinding.ActivityMainBinding;
 import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
@@ -24,16 +24,17 @@ import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
+    @Inject
+    MainViewModel mainViewModel;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
-
     private ActivityMainBinding binding;
-
     private NavController navController1;
-    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Initialize ViewModel
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        ((App) getApplication()).getAppComponent().inject(this);
+//        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         drawerLayout = binding.drawerLayout;
         toolbar = binding.toolBar;

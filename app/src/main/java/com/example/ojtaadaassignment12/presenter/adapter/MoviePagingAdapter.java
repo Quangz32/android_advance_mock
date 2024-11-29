@@ -1,5 +1,6 @@
 package com.example.ojtaadaassignment12.presenter.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -69,9 +70,22 @@ public class MoviePagingAdapter extends PagingDataAdapter<Movie, RecyclerView.Vi
                     listener.onStarClick(movie, position);
                 }
 
-                movie.setFavorite(!movie.isFavorite());
+                Log.d("logd.adapter.star.click", movie.toString());
+//                movie.setFavorite(!movie.isFavorite());
+                Movie movieX = getItem(position);
+                movieX.setFavorite(!movieX.isFavorite());
                 notifyItemChanged(position);
             });
         }
     }
+//
+//    private void removeFavoriteByMovieId(int movieId){
+//        for (int i= 0 ;i < getItemCount(); i++){
+//            Movie movie = getItem(i);
+//            if (movie != null && movie.getId() == movieId){
+//                movie.setFavorite(false);
+//                notifyItemChanged(i);
+//            }
+//        }
+//    }
 }

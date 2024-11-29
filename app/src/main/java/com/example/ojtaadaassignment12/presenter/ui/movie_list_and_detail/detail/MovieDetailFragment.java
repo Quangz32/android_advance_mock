@@ -10,12 +10,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieDetailBinding;
+import com.example.ojtaadaassignment12.domain.model.Movie;
+import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
+
+import javax.inject.Inject;
 
 public class MovieDetailFragment extends Fragment {
 
     MovieDetailViewModel viewModel;
     FragmentMovieDetailBinding binding;
+
+    @Inject
+    FavoriteMoviesViewModel favoriteMoviesViewModel;
 
     public MovieDetailFragment() {
         // Required empty public constructor
@@ -25,7 +33,11 @@ public class MovieDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        ((App) requireActivity().getApplication()).getAppComponent().inject(this);
+
         viewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class); //?? Singleton
+//        favoriteMoviesViewModel = new ViewModelProvider(requireActivity()).get(FavoriteMoviesViewModel.class);
 
     }
 
@@ -36,12 +48,20 @@ public class MovieDetailFragment extends Fragment {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false);
 //        binding.setMovie(new Movie(10, "Hello", "Long overview", "/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg", "2020-11-11", 5.5f, false, true));
         binding.setLifecycleOwner(this);
+        binding.imgStar.setOnClickListener(v -> {
+            Movie movie = viewModel.getMovieLiveData().getValue();
+//            favoriteMoviesViewModel.toggleFavorite(movie);
+            favoriteMoviesViewModel.toggleFavorite(movie);
+            movie.setFavorite(!movie.isFavorite());
+            viewModel.getMovieLiveData().setValue(movie);
+        });
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         viewModel.getMovieLiveData().observe(getViewLifecycleOwner(), binding::setMovie);
     }
 

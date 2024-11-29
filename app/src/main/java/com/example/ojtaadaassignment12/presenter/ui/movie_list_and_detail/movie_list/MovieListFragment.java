@@ -77,7 +77,8 @@ public class MovieListFragment extends Fragment {
             public void onMovieClick(Movie movie, int position) {
                 Log.d("logd.movie.click", movie.toString());
 
-                MovieDetailViewModel movieDetailViewModel = new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
+                MovieDetailViewModel movieDetailViewModel =
+                        new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
                 movieDetailViewModel.getMovieLiveData().setValue(movie);
                 NavController navController = Navigation.findNavController(requireView());
 
@@ -88,7 +89,7 @@ public class MovieListFragment extends Fragment {
             public void onStarClick(Movie movie, int position) {
                 Log.d("logd.star.click", movie.toString());
                 favoriteViewModel.toggleFavorite(movie); //Cập nhật trong DB
-                //đã cập nhật dao diện qua Adapter
+//                movie.setFavorite(!movie.isFavorite());
             }
         });
 

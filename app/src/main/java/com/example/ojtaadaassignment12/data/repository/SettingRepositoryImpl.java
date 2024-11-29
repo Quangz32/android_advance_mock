@@ -8,7 +8,7 @@ import androidx.preference.PreferenceManager;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 
 public class SettingRepositoryImpl implements SettingRepository {
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public SettingRepositoryImpl(Context context) {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

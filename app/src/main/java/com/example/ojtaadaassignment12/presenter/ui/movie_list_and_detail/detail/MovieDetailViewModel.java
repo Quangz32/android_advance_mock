@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class MovieDetailViewModel extends ViewModel {
-    private MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
 
     @Inject
     public MovieDetailViewModel() {

@@ -26,6 +26,7 @@ public class FavoriteMoviesFragment extends Fragment {
 
     @Inject
     FavoriteMoviesViewModel viewModel;
+
     @Inject
     MovieListViewModel movieListViewModel;
 
@@ -56,7 +57,7 @@ public class FavoriteMoviesFragment extends Fragment {
         adapter.setMovieItemCallback(new MovieAdapter.MovieItemCallback() {
             @Override
             public void onMovieClicked(Movie movie, int position) {
-                adapter.notifyItemChanged(position);
+//                adapter.notifyItemChanged(position);
                 Log.d("qz.movie.clicked", movie.getTitle());
             }
 
@@ -66,6 +67,8 @@ public class FavoriteMoviesFragment extends Fragment {
                 Log.d("qz.star.clicked", movie.getTitle());
                 viewModel.removeFromFavorites(movie);
                 adapter.notifyItemRemoved(position);
+
+                movieListViewModel.fetchMovies();   //Cho List fetch lai Movie
             }
         });
 

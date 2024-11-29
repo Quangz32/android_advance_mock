@@ -6,13 +6,13 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "favorite_movies")
 public class MovieEntity {
     @PrimaryKey
-    private int id;
-    private String title;
-    private String overview;
-    private String posterPath;
-    private String releaseDate;
-    private float voteAverage;
-    private boolean adult;
+    private final int id;
+    private final String title;
+    private final String overview;
+    private final String posterPath;
+    private final String releaseDate;
+    private final float voteAverage;
+    private final boolean adult;
 
     public MovieEntity(int id, String title, String overview, String posterPath, String releaseDate,
                        float voteAverage, boolean adult) {

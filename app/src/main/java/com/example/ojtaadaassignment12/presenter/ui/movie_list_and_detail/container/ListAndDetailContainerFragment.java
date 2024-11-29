@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -17,8 +16,13 @@ import com.example.ojtaadaassignment12.databinding.FragmentListAndDetailContaine
 import com.example.ojtaadaassignment12.presenter.ui.main.MainActivity;
 import com.example.ojtaadaassignment12.presenter.ui.main.MainViewModel;
 
+import javax.inject.Inject;
+
 public class ListAndDetailContainerFragment extends Fragment {
-    private MainViewModel mainViewModel;
+
+    @Inject
+    MainViewModel mainViewModel;
+
     private FragmentListAndDetailContainerBinding binding;
     private NavController navController;
 
@@ -37,8 +41,8 @@ public class ListAndDetailContainerFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentListAndDetailContainerBinding.inflate(inflater, container, false);
 
-
-        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        // Inject dependencies
+        ((App) requireActivity().getApplication()).getAppComponent().inject(this);
 
         return binding.getRoot();
     }

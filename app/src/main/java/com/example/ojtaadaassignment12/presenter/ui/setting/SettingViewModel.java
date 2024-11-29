@@ -18,10 +18,10 @@ public class SettingViewModel extends ViewModel {
     private final GetSettingUseCase getSettingUseCase;
     private final SaveSettingUseCase saveSettingUseCase;
 
-    private MutableLiveData<String> categoryLiveData = new MutableLiveData<>();
-    private MutableLiveData<Integer> movieRateLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> releaseYearLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> sortByLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> categoryLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> movieRateLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> releaseYearLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> sortByLiveData = new MutableLiveData<>();
 
     @Inject
     public SettingViewModel(GetSettingUseCase getSettingUseCase, SaveSettingUseCase saveSettingUseCase) {

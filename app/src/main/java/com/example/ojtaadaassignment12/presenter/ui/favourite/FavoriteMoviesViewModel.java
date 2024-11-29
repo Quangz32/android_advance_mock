@@ -68,6 +68,7 @@ public class FavoriteMoviesViewModel extends ViewModel {
     }
 
     public void toggleFavorite(Movie movie) {
+        Log.d("logd.toggleFavorite", movie.toString());
         if (movie.isFavorite()) {
             removeFromFavorites(movie);
         } else {

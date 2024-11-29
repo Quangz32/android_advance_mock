@@ -3,8 +3,6 @@ package com.example.ojtaadaassignment12.presenter.ui.main;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.ojtaadaassignment12.R;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

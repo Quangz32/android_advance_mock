@@ -25,7 +25,6 @@ public class MovieListViewModel extends ViewModel {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-
     private final MutableLiveData<PagingData<Movie>> moviesPagingLiveData = new MutableLiveData<>();
 
     @Inject
