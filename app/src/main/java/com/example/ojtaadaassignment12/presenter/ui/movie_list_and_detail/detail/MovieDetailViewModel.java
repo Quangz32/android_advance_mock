@@ -34,6 +34,12 @@ public class MovieDetailViewModel extends ViewModel {
         return movieLiveData;
     }
 
+    public void toggleFavorite(){
+        Movie movie = movieLiveData.getValue();
+        movie.setFavorite(!movie.isFavorite());
+        movieLiveData.setValue(movie);
+    }
+
     public void fetchCastAndCrew(int movieId, String apiKey) {
         disposables.add(
                 getCastAndCrewUseCase.execute(movieId, apiKey)

@@ -16,6 +16,7 @@ import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.databinding.FragmentFavoriteMoviesBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.adapter.MovieAdapter;
+import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListViewModel;
 
 import javax.inject.Inject;
@@ -29,6 +30,9 @@ public class FavoriteMoviesFragment extends Fragment {
 
     @Inject
     MovieListViewModel movieListViewModel;
+
+    @Inject
+    MovieDetailViewModel movieDetailViewModel;
 
     @Nullable
     @Override
@@ -69,6 +73,10 @@ public class FavoriteMoviesFragment extends Fragment {
                 adapter.notifyItemRemoved(position);
 
                 movieListViewModel.fetchMovies();   //Cho List fetch lai Movie
+
+                if (movieDetailViewModel.getMovieLiveData().getValue().getId() == movie.getId()){
+                    movieDetailViewModel.toggleFavorite();
+                }
             }
         });
 

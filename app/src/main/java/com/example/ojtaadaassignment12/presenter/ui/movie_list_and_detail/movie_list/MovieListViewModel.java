@@ -53,12 +53,6 @@ public class MovieListViewModel extends ViewModel {
         disposables.add(disposable);
     }
 
-//    public void toggleFavorite(int position){
-//        Movie movie = moviesLiveData.getValue().get(position);
-//        movie.setFavorite(!movie.isFavorite());
-//        moviesLiveData.getValue().set(position, movie);
-//    }
-
     @Override
     protected void onCleared() {
         super.onCleared();

@@ -55,8 +55,9 @@ public class MovieDetailFragment extends Fragment {
             Movie movie = viewModel.getMovieLiveData().getValue();
 //            favoriteMoviesViewModel.toggleFavorite(movie);
             favoriteMoviesViewModel.toggleFavorite(movie);
-            movie.setFavorite(!movie.isFavorite());
-            viewModel.getMovieLiveData().setValue(movie);
+            viewModel.toggleFavorite();
+//            movie.setFavorite(!movie.isFavorite());
+//            viewModel.getMovieLiveData().setValue(movie);
         });
         return binding.getRoot();
     }
