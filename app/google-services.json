@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "455712138528",
+    "firebase_url": "https://aada-mock-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "aada-mock",
+    "storage_bucket": "aada-mock.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455712138528:android:b6765b94ed62ec00bae345",
+        "android_client_info": {
+          "package_name": "com.example.ojtaadaassignment12"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeZ2bSvLyJlB9dFb9jQ9TOowDC7Q_-TPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

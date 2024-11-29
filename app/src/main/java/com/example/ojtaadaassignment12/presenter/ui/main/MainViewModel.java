@@ -10,12 +10,19 @@ import javax.inject.Singleton;
 public class MainViewModel extends ViewModel {
     public MutableLiveData<Boolean> tab1ShowingDetail = new MutableLiveData<>(false);
 
+    public MutableLiveData<String> toolbarText = new MutableLiveData<>("");
+
+
     @Inject
     public MainViewModel() {
     }
 
     public MutableLiveData<Boolean> getTab1ShowingDetail() {
         return tab1ShowingDetail;
+    }
+
+    public MutableLiveData<String> getToolbarText() {
+        return toolbarText;
     }
 
 

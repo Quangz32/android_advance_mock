@@ -23,6 +23,7 @@ import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 import com.example.ojtaadaassignment12.presenter.adapter.MoviePagingAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.main.MainViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
 
@@ -51,6 +52,9 @@ public class MovieListFragment extends Fragment {
 
     @Inject
     SettingRepository settingRepository;
+
+    @Inject
+    MainViewModel mainViewModel;
 
     //    private MovieListViewModel viewModel;
     private FragmentMovieListBinding binding;
@@ -123,6 +127,9 @@ public class MovieListFragment extends Fragment {
                 NavController navController = Navigation.findNavController(requireView());
 
                 navController.navigate(R.id.movieDetailFragment);
+                mainViewModel.getToolbarText().setValue(movie.getTitle());
+
+
             }
 
             @Override

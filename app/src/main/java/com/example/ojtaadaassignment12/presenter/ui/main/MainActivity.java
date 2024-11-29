@@ -20,6 +20,7 @@ import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
+import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -29,6 +30,10 @@ import javax.inject.Inject;
 public class MainActivity extends AppCompatActivity {
     @Inject
     MainViewModel mainViewModel;
+
+    @Inject
+    MovieDetailViewModel movieDetailViewModel;
+
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewPager2 viewPager;
@@ -69,9 +74,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> {
             if (Boolean.TRUE.equals(mainViewModel.getTab1ShowingDetail().getValue())) {
                 navController1.navigate(R.id.movieListFragment);
+                mainViewModel.getToolbarText().setValue("Movies");
             } else {
                 drawerLayout.openDrawer(binding.navigationView);
             }
+        });
+
+        mainViewModel.getToolbarText().observe(this, text ->{
+            toolbar.setTitle(text);
         });
 
     }
@@ -93,6 +103,33 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new SettingFragment(), "Setting");
         adapter.addFragment(new Fragment(), "Blank");
         viewPager.setAdapter(adapter);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+//                int tabPosition = tab.getPosition();
+                String[] tabTitles = {"Movies", "Favorite", "Setting", "About"};
+                if (tab.getPosition() == 0 &&
+                        Boolean.TRUE.equals(mainViewModel.getTab1ShowingDetail().getValue())
+                ){
+                    mainViewModel.getToolbarText().setValue(
+                            movieDetailViewModel.getMovieLiveData().getValue().getTitle());
+                } else{
+                    mainViewModel.getToolbarText().setValue(tabTitles[tab.getPosition()]);
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         // Connect TabLayout with ViewPager2, and set custom tab icon,title,badge
         int[] icons = {R.drawable.baseline_home_24,
@@ -135,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
+
+
 
 
 }
