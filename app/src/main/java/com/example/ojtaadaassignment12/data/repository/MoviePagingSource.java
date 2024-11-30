@@ -1,6 +1,5 @@
 package com.example.ojtaadaassignment12.data.repository;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,10 +13,7 @@ import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -39,7 +35,7 @@ public class MoviePagingSource extends RxPagingSource<Integer, Movie> {
                              MovieRepository movieRepository,
                              FavoriteMovieRepository favoriteMovieRepository,
                              SettingRepository settingRepository
-                             ) {
+    ) {
         this.category = category;
         this.apiKey = apiKey;
         this.movieRepository = movieRepository;
@@ -68,17 +64,17 @@ public class MoviePagingSource extends RxPagingSource<Integer, Movie> {
                                 for (Movie movie : movies) {
                                     if (
                                             movie.getVoteAverage() >= settingRepository.getMovieRate() &&
-                                            movie.getReleaseDate().substring(0,4).compareTo(settingRepository.getReleaseYear()) >= 0
-                                    ){
+                                                    movie.getReleaseDate().substring(0, 4).compareTo(settingRepository.getReleaseYear()) >= 0
+                                    ) {
                                         filtedMovie.add(movie);
                                     }
                                 }
 
                                 //Sắp xếp
                                 filtedMovie.sort((m1, m2) -> {
-                                    if (settingRepository.getSortBy().equals("Rating")){
+                                    if (settingRepository.getSortBy().equals("Rating")) {
                                         return Float.compare(m1.getVoteAverage(), m2.getVoteAverage());
-                                    } else{ //Release date
+                                    } else { //Release date
                                         return m1.getReleaseDate().compareTo(m2.getReleaseDate());
                                     }
                                 });

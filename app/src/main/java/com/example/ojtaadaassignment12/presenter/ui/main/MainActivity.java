@@ -3,13 +3,18 @@ package com.example.ojtaadaassignment12.presenter.ui.main;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,11 +22,15 @@ import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.R;
 import com.example.ojtaadaassignment12.databinding.ActivityMainBinding;
 import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
+import com.example.ojtaadaassignment12.domain.model.User;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
+import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.user.UserProfileViewModel;
+import com.example.ojtaadaassignment12.presenter.utils.MyBitmapUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -33,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     MovieDetailViewModel movieDetailViewModel;
+
+    @Inject
+    SettingViewModel settingViewModel;
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -59,7 +71,59 @@ public class MainActivity extends AppCompatActivity {
 
         setupToolbarAndDrawer();
         setupTabAndPage();
+        setupNavigationHeader(); // User Profile
 
+    }
+
+    private void setupNavigationHeader() {
+        final String USER_ID = "abcd";
+
+        UserProfileViewModel userProfileViewModel =
+                new ViewModelProvider(this).get(UserProfileViewModel.class);
+
+        userProfileViewModel.getUser(USER_ID);
+
+        userProfileViewModel.getUserLiveData().observe(this, this::showUserProfile);
+
+//        userProfileViewModel.getUser(USER_ID).observe(this, user -> {
+//            if (user == null) {
+//                Log.d("logd.user", "user : NULL!");
+//            } else {
+//                Log.d("logd.user", user.toString());
+//            }
+//        });
+
+
+    }
+
+//        userProfileViewModel.getUser(USER_ID).observe(this, user -> {
+//            if (user == null) {
+//                Log.d("logd.user", "user : NULL!");
+//            } else {
+//                Log.d("logd.user", user.toString());
+//            }
+//        };
+////
+//        User user = userProfileViewModel.getUser(USER_ID).getValue();
+//        Log.d("logd.user", user == null ? "user : NULL!" : user.toString());
+//        User newUser = new User("Quangz2", "qz@gmail.com", "2003/02/02", "male", "image");
+
+//        userProfileViewModel.saveUser("abcd", newUser);
+//    }
+
+    private void showUserProfile(User user) {
+        View navHeader = binding.navigationView.getHeaderView(0);
+        ImageView ivAvatar = navHeader.findViewById(R.id.nav_avatar);
+        TextView tvName = navHeader.findViewById(R.id.nav_name);
+        TextView tvEmail = navHeader.findViewById(R.id.nav_email);
+        TextView tvDob = navHeader.findViewById(R.id.nav_dob);
+        TextView tvGender = navHeader.findViewById(R.id.nav_gender);
+
+        tvName.setText(user.getFullName());
+        tvEmail.setText(user.getEmail());
+        tvDob.setText(user.getDob());
+        tvGender.setText(user.getGender());
+        ivAvatar.setImageBitmap(MyBitmapUtil.decodeBase64ToBitmap(user.getAvatar()));
     }
 
     private void setupToolbarAndDrawer() {
@@ -80,9 +144,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mainViewModel.getToolbarText().observe(this, text ->{
+        mainViewModel.getToolbarText().observe(this, text -> {
             toolbar.setTitle(text);
         });
+
 
     }
 
@@ -111,10 +176,10 @@ public class MainActivity extends AppCompatActivity {
                 String[] tabTitles = {"Movies", "Favorite", "Setting", "About"};
                 if (tab.getPosition() == 0 &&
                         Boolean.TRUE.equals(mainViewModel.getTab1ShowingDetail().getValue())
-                ){
+                ) {
                     mainViewModel.getToolbarText().setValue(
                             movieDetailViewModel.getMovieLiveData().getValue().getTitle());
-                } else{
+                } else {
                     mainViewModel.getToolbarText().setValue(tabTitles[tab.getPosition()]);
 
                 }
@@ -174,6 +239,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        String selectedCategory;
 
+        if (item.getItemId() == R.id.menu_item_popular) {
+            selectedCategory = "Popular";
+        } else if (item.getItemId() == R.id.menu_item_top_rated) {
+            selectedCategory = "Top Rated";
+        } else if (item.getItemId() == R.id.menu_item_upcoming) {
+            selectedCategory = "Upcoming";
+        } else {
+            selectedCategory = "Now Playing";
+        }
 
+        settingViewModel.setCategoryLiveData(selectedCategory);
+        settingViewModel.saveCategory(selectedCategory);
+
+        return super.onOptionsItemSelected(item);
+    }
 }

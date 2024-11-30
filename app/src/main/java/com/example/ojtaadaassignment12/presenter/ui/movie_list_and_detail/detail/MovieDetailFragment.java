@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieDetailBinding;
-import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.presenter.binding.BindingAdapters;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
 

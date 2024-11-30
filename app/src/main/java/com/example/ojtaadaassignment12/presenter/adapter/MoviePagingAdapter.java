@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
 import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 

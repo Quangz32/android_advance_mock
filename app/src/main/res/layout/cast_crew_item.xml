@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="castAndCrew"
             type="com.example.ojtaadaassignment12.domain.model.CastAndCrew" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,11 +16,11 @@
 
         <ImageView
             android:id="@+id/cast_photo"
+            imageUrl="@{castAndCrew.backdropPath}"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:scaleType="centerCrop"
 
-            imageUrl="@{castAndCrew.backdropPath}"
+            android:scaleType="centerCrop"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
