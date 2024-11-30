@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         TableLayout reminderTableLayout = binding.navigationView.getHeaderView(0)
                                             .findViewById(R.id.reminder_table);
 
-        reminderTableLayout.removeAllViews();
 
         //Theo dõi Reminder ViewModel để update Upcoming Reminder
         reminderViewModel.getRemindersLiveData().observe(this, reminders -> {
@@ -154,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("logd.3reminder", "Reminder: " + upcomingReminders.toString());
 
-                for (Reminder reminder : upcomingReminders) {
+            reminderTableLayout.removeAllViews();
+
+            for (Reminder reminder : upcomingReminders) {
                     View tableRow = LayoutInflater.from(this)
                             .inflate(R.layout.reminder_item_drawer, null);
 

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.example.ojtaadaassignment12'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.example.ojtaadaassignment12"
@@ -93,6 +93,9 @@ dependencies {
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics'
+
+    //work
+    implementation "androidx.work:work-runtime:2.10.0"
 
 
     implementation libs.appcompat

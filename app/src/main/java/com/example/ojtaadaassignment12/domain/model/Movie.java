@@ -98,4 +98,9 @@ public class Movie {
                 this.isFavorite == movieToCompare.isFavorite;
 
     }
+
+    @NonNull
+    public Movie getClone(){
+        return new Movie(id, title, overview, posterPath, releaseDate, voteAverage, adult, isFavorite);
+    }
 }

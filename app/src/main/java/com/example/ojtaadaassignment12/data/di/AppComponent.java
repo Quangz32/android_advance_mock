@@ -7,6 +7,7 @@ import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.example.ojtaadaassignment12.presenter.ui.user.EditProfileFragment;
+import com.example.ojtaadaassignment12.presenter.utils.ReminderWorker;
 
 import javax.inject.Singleton;
 
@@ -34,4 +35,5 @@ public interface AppComponent {
 
     void inject(EditProfileFragment fragment);
 
+    void inject(ReminderWorker reminderWorker);
 }

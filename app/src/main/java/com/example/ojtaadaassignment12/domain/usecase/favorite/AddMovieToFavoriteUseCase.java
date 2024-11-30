@@ -1,4 +1,4 @@
-package com.example.ojtaadaassignment12.domain.usecase;
+package com.example.ojtaadaassignment12.domain.usecase.favorite;
 
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.domain.repository.FavoriteMovieRepository;

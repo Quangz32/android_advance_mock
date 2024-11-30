@@ -1,4 +1,4 @@
-package com.example.ojtaadaassignment12.domain.usecase;
+package com.example.ojtaadaassignment12.domain.usecase.favorite;
 
 public class AddToFavoriteUseCase {
 //
