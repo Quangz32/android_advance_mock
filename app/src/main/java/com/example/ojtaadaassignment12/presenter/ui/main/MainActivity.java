@@ -1,9 +1,11 @@
 package com.example.ojtaadaassignment12.presenter.ui.main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,8 +32,10 @@ import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.contai
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.user.EditProfileFragment;
 import com.example.ojtaadaassignment12.presenter.ui.user.UserProfileViewModel;
 import com.example.ojtaadaassignment12.presenter.utils.MyBitmapUtil;
+import com.example.ojtaadaassignment12.presenter.utils.MyConstants;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -45,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     SettingViewModel settingViewModel;
+
+    @Inject
+    UserProfileViewModel userProfileViewModel;
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -76,40 +84,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupNavigationHeader() {
-        final String USER_ID = "abcd";
-
-        UserProfileViewModel userProfileViewModel =
-                new ViewModelProvider(this).get(UserProfileViewModel.class);
-
-        userProfileViewModel.getUser(USER_ID);
-
+        userProfileViewModel.getUser(MyConstants.USER_ID);
         userProfileViewModel.getUserLiveData().observe(this, this::showUserProfile);
 
-//        userProfileViewModel.getUser(USER_ID).observe(this, user -> {
-//            if (user == null) {
-//                Log.d("logd.user", "user : NULL!");
-//            } else {
-//                Log.d("logd.user", user.toString());
-//            }
-//        });
+        //Khi nhấn vào nút Edit
+        Button btnEdit = binding.navigationView.getHeaderView(0).findViewById(R.id.btn_edit);
+        btnEdit.setOnClickListener(view -> {
+            drawerLayout.setVisibility(View.GONE);
+            showFragment(new EditProfileFragment());
+        });
 
+        //Listener khi người dùng edit xong
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                drawerLayout.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
-
-//        userProfileViewModel.getUser(USER_ID).observe(this, user -> {
-//            if (user == null) {
-//                Log.d("logd.user", "user : NULL!");
-//            } else {
-//                Log.d("logd.user", user.toString());
-//            }
-//        };
-////
-//        User user = userProfileViewModel.getUser(USER_ID).getValue();
-//        Log.d("logd.user", user == null ? "user : NULL!" : user.toString());
-//        User newUser = new User("Quangz2", "qz@gmail.com", "2003/02/02", "male", "image");
-
-//        userProfileViewModel.saveUser("abcd", newUser);
-//    }
 
     private void showUserProfile(User user) {
         View navHeader = binding.navigationView.getHeaderView(0);
@@ -257,5 +249,16 @@ public class MainActivity extends AppCompatActivity {
         settingViewModel.saveCategory(selectedCategory);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showFragment(Fragment fragment) {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        drawerLayout.setVisibility(View.GONE);
+        findViewById(R.id.edit_profile_fragment).setVisibility(View.VISIBLE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.edit_profile_fragment, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

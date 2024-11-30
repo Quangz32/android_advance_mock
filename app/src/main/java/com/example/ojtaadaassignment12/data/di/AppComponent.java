@@ -6,6 +6,7 @@ import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.contai
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
+import com.example.ojtaadaassignment12.presenter.ui.user.EditProfileFragment;
 
 import javax.inject.Singleton;
 
@@ -30,5 +31,7 @@ public interface AppComponent {
     void inject(ListAndDetailContainerFragment fragment);
 
     void inject(MovieDetailFragment fragment);
+
+    void inject(EditProfileFragment fragment);
 
 }

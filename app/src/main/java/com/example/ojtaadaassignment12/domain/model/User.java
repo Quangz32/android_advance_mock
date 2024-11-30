@@ -1,5 +1,7 @@
 package com.example.ojtaadaassignment12.domain.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -22,20 +24,42 @@ public class User implements Serializable {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDob() {
         return dob;
     }
 
+    //Setters
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
     public String getGender() {
         return gender;
     }
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getAvatar() {
         return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override
@@ -47,5 +71,10 @@ public class User implements Serializable {
                 ", gender='" + gender + '\'' +
                 ", avatar='" + avatar + '\'' +
                 '}';
+    }
+
+    @NonNull
+    public User clone(){
+        return new User(fullName, email, dob, gender, avatar);
     }
 }

@@ -14,10 +14,12 @@ import com.example.ojtaadaassignment12.data.repository.CastAndCrewRepositoryImpl
 import com.example.ojtaadaassignment12.data.repository.FavoriteMovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.SettingRepositoryImpl;
+import com.example.ojtaadaassignment12.data.repository.UserRepositoryImpl;
 import com.example.ojtaadaassignment12.domain.repository.CastAndCrewRepository;
 import com.example.ojtaadaassignment12.domain.repository.FavoriteMovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
+import com.example.ojtaadaassignment12.domain.repository.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -69,6 +71,12 @@ public class RepositoryModule {
             CastAndCrewApi api, CastAndCrewMapper mapper
     ) {
         return new CastAndCrewRepositoryImpl(api, mapper);
+    }
+
+    @Singleton
+    @Provides
+    public UserRepository provideUserRepository() {
+        return new UserRepositoryImpl();
     }
 }
 

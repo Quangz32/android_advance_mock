@@ -13,15 +13,21 @@ import com.example.ojtaadaassignment12.domain.usecase.user.SaveUserUseCase;
 
 import java.util.concurrent.CompletableFuture;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class UserProfileViewModel extends ViewModel {
 
     private final GetUserUseCase getUserUseCase;
     private final SaveUserUseCase saveUserUseCase;
     private final MutableLiveData<User> userLiveData = new MutableLiveData<>();
 
-    public UserProfileViewModel() {
-        getUserUseCase = new GetUserUseCase(new UserRepositoryImpl());
-        saveUserUseCase = new SaveUserUseCase(new UserRepositoryImpl());
+    @Inject
+    public UserProfileViewModel(GetUserUseCase getUserUseCase,
+                                SaveUserUseCase saveUserUseCase) {
+        this.getUserUseCase = getUserUseCase;
+        this.saveUserUseCase = saveUserUseCase;
     }
 
     public LiveData<User> getUser(String userId) {
