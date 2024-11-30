@@ -162,9 +162,11 @@ public class MovieDetailFragment extends Fragment {
                     .build();
 
             OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(ReminderWorker.class)
+                    .addTag(String.valueOf(reminder.getId()))   //Để sau này cancel
                     .setInitialDelay(reminder.getTimestamp() - System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                     .setInputData(inputData)
                     .build();
+
 
             WorkManager.getInstance(requireContext()).enqueue(workRequest);
         }).start();

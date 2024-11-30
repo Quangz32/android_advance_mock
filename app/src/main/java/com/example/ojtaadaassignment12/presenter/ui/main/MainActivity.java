@@ -36,6 +36,7 @@ import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.reminder.ReminderFragment;
 import com.example.ojtaadaassignment12.presenter.ui.reminder.ReminderViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingViewModel;
@@ -200,6 +201,13 @@ public class MainActivity extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 drawerLayout.setVisibility(View.VISIBLE);
             }
+        });
+
+        //Khi nhấn nút Show all Reminder
+        Button btnShowAllReminder = binding.navigationView.getHeaderView(0).findViewById(R.id.btn_show_all_reminder);
+        btnShowAllReminder.setOnClickListener(view -> {
+            drawerLayout.setVisibility(View.GONE);
+            showFragment(new ReminderFragment());
         });
 
     }

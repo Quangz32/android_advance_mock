@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/line_1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="Spectre - 1970 - 6.3/10"
@@ -33,6 +33,7 @@
             android:textStyle="bold|italic"
 
             app:layout_constraintStart_toEndOf="@id/movie_poster"
+            app:layout_constraintEnd_toStartOf="@id/iv_delete"
             app:layout_constraintTop_toTopOf="@id/movie_poster" />
 
         <TextView
@@ -49,7 +50,7 @@
             android:id="@+id/iv_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/baseline_keyboard_arrow_right_24"
+            android:src="@drawable/baseline_delete_24"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

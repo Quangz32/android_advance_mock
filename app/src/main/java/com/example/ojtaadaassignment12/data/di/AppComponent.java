@@ -5,6 +5,7 @@ import com.example.ojtaadaassignment12.presenter.ui.main.MainActivity;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListFragment;
+import com.example.ojtaadaassignment12.presenter.ui.reminder.ReminderFragment;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
 import com.example.ojtaadaassignment12.presenter.ui.user.EditProfileFragment;
 import com.example.ojtaadaassignment12.presenter.utils.ReminderWorker;
@@ -36,4 +37,6 @@ public interface AppComponent {
     void inject(EditProfileFragment fragment);
 
     void inject(ReminderWorker reminderWorker);
+
+    void inject(ReminderFragment reminderFragment);
 }
