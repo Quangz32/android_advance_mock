@@ -5,7 +5,9 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.ojtaadaassignment12.data.local.dao.MovieDao;
-import com.example.ojtaadaassignment12.data.local.database.AppDatabase;
+import com.example.ojtaadaassignment12.data.local.dao.ReminderDao;
+import com.example.ojtaadaassignment12.data.local.database.FavoriteMoviesDatabase;
+import com.example.ojtaadaassignment12.data.local.database.RemindersDatabase;
 import com.example.ojtaadaassignment12.data.mapper.CastAndCrewMapper;
 import com.example.ojtaadaassignment12.data.mapper.MovieMapper;
 import com.example.ojtaadaassignment12.data.remote.api.CastAndCrewApi;
@@ -13,11 +15,13 @@ import com.example.ojtaadaassignment12.data.remote.api.MovieApi;
 import com.example.ojtaadaassignment12.data.repository.CastAndCrewRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.FavoriteMovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryImpl;
+import com.example.ojtaadaassignment12.data.repository.ReminderRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.SettingRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.UserRepositoryImpl;
 import com.example.ojtaadaassignment12.domain.repository.CastAndCrewRepository;
 import com.example.ojtaadaassignment12.domain.repository.FavoriteMovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
+import com.example.ojtaadaassignment12.domain.repository.ReminderRepository;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 import com.example.ojtaadaassignment12.domain.repository.UserRepository;
 
@@ -44,7 +48,7 @@ public class RepositoryModule {
     @Singleton
     @Provides
     public MovieDao provideMovieDao(Context context) {
-        return Room.databaseBuilder(context, AppDatabase.class, "movie_database").build().movieDao();
+        return Room.databaseBuilder(context, FavoriteMoviesDatabase.class, "movie_database").build().movieDao();
     }
 
     @Singleton
@@ -77,6 +81,21 @@ public class RepositoryModule {
     @Provides
     public UserRepository provideUserRepository() {
         return new UserRepositoryImpl();
+    }
+
+
+    //Reminder
+    @Singleton
+    @Provides
+    public ReminderDao provideReminderDao(Context context) {
+        return Room.databaseBuilder(context, RemindersDatabase.class, "reminders_database")
+                .build().reminderDao();
+    }
+
+    @Singleton
+    @Provides
+    public ReminderRepository provideReminderRepository(ReminderDao reminderDao) {
+        return new ReminderRepositoryImpl(reminderDao);
     }
 }
 
