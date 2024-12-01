@@ -33,6 +33,7 @@ import com.example.ojtaadaassignment12.domain.model.User;
 import com.example.ojtaadaassignment12.domain.usecase.reminder.GetAllReminderUseCase;
 import com.example.ojtaadaassignment12.domain.usecase.reminder.InsertReminderUseCase;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
+import com.example.ojtaadaassignment12.presenter.ui.about.AboutFragment;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
@@ -267,7 +268,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new ListAndDetailContainerFragment(), "Movies");
         adapter.addFragment(new FavoriteMoviesFragment(), "Favorites");
         adapter.addFragment(new SettingFragment(), "Setting");
-        adapter.addFragment(new Fragment(), "Blank");
+//        adapter.addFragment(new Fragment(), "Blank");
+        adapter.addFragment(new AboutFragment(), "About");
+
         viewPager.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
