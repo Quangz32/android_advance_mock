@@ -44,6 +44,10 @@ import com.example.ojtaadaassignment12.presenter.utils.MyBitmapUtil;
 import com.example.ojtaadaassignment12.presenter.utils.MyConstants;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -54,6 +58,9 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
+    @Inject
+    DatabaseReference databaseReference;    //để theo dõi sự thay đổi trên Firebase
+
     @Inject
     MainViewModel mainViewModel;
 
@@ -106,33 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupReminder() {
         reminderViewModel.fetchReminders();
-
-//        Reminder reminder1 = new Reminder(
-//                1, "movie1", "2020-11-11", 6.9f,
-//                "kqjL17yufvn9OVLyXYpvtyrFfak.jpg", 310927);
-//        Reminder reminder2 = new Reminder(
-//                2, "movie2", "2020-11-11", 6.9f,
-//                "kqjL17yufvn9OVLyXYpvtyrFfak.jpg", 512070);
-//        Reminder reminder3 = new Reminder(
-//                3, "movie3", "2020-11-11", 6.9f,
-//                "kqjL17yufvn9OVLyXYpvtyrFfak.jpg", 323790);
-//        Reminder reminder4 = new Reminder(
-//                4, "movie4", "2020-11-11", 6.9f,
-//                "kqjL17yufvn9OVLyXYpvtyrFfak.jpg", 433523);
-//
-//
-//        reminderViewModel.deleteReminder(reminder1);
-//        reminderViewModel.deleteReminder(reminder2);
-//        reminderViewModel.deleteReminder(reminder3);
-//        reminderViewModel.deleteReminder(reminder4);
-//
-//
-//        reminderViewModel.insertReminder(reminder1);
-//        reminderViewModel.insertReminder(reminder2);
-//        reminderViewModel.insertReminder(reminder3);
-//        reminderViewModel.insertReminder(reminder4);
-//        reminderViewModel.fetchReminders();
-
     }
 
     private void loadReminders() {
@@ -187,6 +167,17 @@ public class MainActivity extends AppCompatActivity {
     private void setupNavigationHeader() {
         userProfileViewModel.getUser(MyConstants.USER_ID);
         userProfileViewModel.getUserLiveData().observe(this, this::showUserProfile);
+
+        //Theo dõi Firebase
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userProfileViewModel.getUser(MyConstants.USER_ID);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         //Khi nhấn vào nút Edit
         Button btnEdit = binding.navigationView.getHeaderView(0).findViewById(R.id.btn_edit);
@@ -367,12 +358,11 @@ public class MainActivity extends AppCompatActivity {
         if (itemId == R.id.menu_item_list || itemId == R.id.menu_item_grid) {
             movieListViewModel.getGridMode().setValue(itemId == R.id.menu_item_list);
 
+            item.setVisible(false);
             if (itemId == R.id.menu_item_list) {
-                item.setVisible(false);
                 MenuItem gridItem = toolbar.getMenu().findItem(R.id.menu_item_grid);
                 if (gridItem != null) gridItem.setVisible(true);
-            } else if (itemId == R.id.menu_item_grid) {
-                item.setVisible(false);
+            } else {
                 MenuItem listItem = toolbar.getMenu().findItem(R.id.menu_item_list);
                 if (listItem != null) listItem.setVisible(true);
             }

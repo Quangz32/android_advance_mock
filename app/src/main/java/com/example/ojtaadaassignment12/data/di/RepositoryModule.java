@@ -12,6 +12,7 @@ import com.example.ojtaadaassignment12.data.mapper.CastAndCrewMapper;
 import com.example.ojtaadaassignment12.data.mapper.MovieMapper;
 import com.example.ojtaadaassignment12.data.remote.api.CastAndCrewApi;
 import com.example.ojtaadaassignment12.data.remote.api.MovieApi;
+import com.example.ojtaadaassignment12.data.remote.firebase.FirebaseUserDataSource;
 import com.example.ojtaadaassignment12.data.repository.CastAndCrewRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.FavoriteMovieRepositoryImpl;
 import com.example.ojtaadaassignment12.data.repository.MovieRepositoryImpl;
@@ -24,6 +25,8 @@ import com.example.ojtaadaassignment12.domain.repository.MovieRepository;
 import com.example.ojtaadaassignment12.domain.repository.ReminderRepository;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
 import com.example.ojtaadaassignment12.domain.repository.UserRepository;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
 
@@ -77,10 +80,17 @@ public class RepositoryModule {
         return new CastAndCrewRepositoryImpl(api, mapper);
     }
 
+
     @Singleton
     @Provides
-    public UserRepository provideUserRepository() {
-        return new UserRepositoryImpl();
+    public DatabaseReference provideDatabaseReference() {
+        return FirebaseDatabase.getInstance().getReference("users");
+    }
+
+    @Singleton
+    @Provides
+    public UserRepository provideUserRepository(FirebaseUserDataSource firebaseUserDataSource) {
+        return new UserRepositoryImpl(firebaseUserDataSource);
     }
 
 

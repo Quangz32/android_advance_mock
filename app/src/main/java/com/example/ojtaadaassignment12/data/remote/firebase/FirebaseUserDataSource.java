@@ -6,14 +6,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.CompletableFuture;
 
+import javax.inject.Inject;
+
 public class FirebaseUserDataSource {
 
     private final DatabaseReference databaseReference;
 
-    public FirebaseUserDataSource() {
-        // Truy cập vào Realtime Database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("users");
+    @Inject
+    public FirebaseUserDataSource(DatabaseReference databaseReference) {
+//        // Truy cập vào Realtime Database
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        databaseReference = database.getReference("users");
+        this.databaseReference = databaseReference;
     }
 
     // Lưu người dùng vào Realtime Database (sử dụng UserDto)

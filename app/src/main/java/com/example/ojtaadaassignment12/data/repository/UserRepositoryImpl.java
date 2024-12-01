@@ -8,12 +8,15 @@ import com.example.ojtaadaassignment12.domain.repository.UserRepository;
 
 import java.util.concurrent.CompletableFuture;
 
+import javax.inject.Inject;
+
 public class UserRepositoryImpl implements UserRepository {
 
     private final FirebaseUserDataSource firestoreDataSource;
 
-    public UserRepositoryImpl() {
-        firestoreDataSource = new FirebaseUserDataSource();
+    @Inject
+    public UserRepositoryImpl(FirebaseUserDataSource firestoreDataSource) {
+        this.firestoreDataSource = firestoreDataSource;
     }
 
     @Override

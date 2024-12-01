@@ -34,19 +34,15 @@ public class ReminderRepositoryImpl implements ReminderRepository {
                 .map(ReminderMapper::mapToDomain);
     }
 
-    //        return Completable.fromAction(() -> movieDao.insertMovie(movieMapper.mapToEntity(movie)))
-//            .subscribeOn(Schedulers.io());  // Thực thi trên background thread
     @Override
     public Completable insertReminder(Reminder reminder) {
         return Completable.fromAction(() -> reminderDao.insertReminder(ReminderMapper.mapToEntity(reminder)))
                 .subscribeOn(Schedulers.io());
-//        reminderDao.insertReminder(ReminderMapper.mapToEntity(reminder));
     }
 
     @Override
     public Completable deleteReminder(Reminder reminder) {
         return Completable.fromAction(() -> reminderDao.deleteReminder(ReminderMapper.mapToEntity(reminder)))
                 .subscribeOn(Schedulers.io());
-//        reminderDao.deleteReminder(ReminderMapper.mapToEntity(reminder));
     }
 }
