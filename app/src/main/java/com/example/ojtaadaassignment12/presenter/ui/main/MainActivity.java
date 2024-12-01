@@ -1,6 +1,5 @@
 package com.example.ojtaadaassignment12.presenter.ui.main;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -30,13 +28,12 @@ import com.example.ojtaadaassignment12.databinding.ActivityMainBinding;
 import com.example.ojtaadaassignment12.databinding.CustomTabBinding;
 import com.example.ojtaadaassignment12.domain.model.Reminder;
 import com.example.ojtaadaassignment12.domain.model.User;
-import com.example.ojtaadaassignment12.domain.usecase.reminder.GetAllReminderUseCase;
-import com.example.ojtaadaassignment12.domain.usecase.reminder.InsertReminderUseCase;
 import com.example.ojtaadaassignment12.presenter.adapter.ViewPagerAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.about.AboutFragment;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.container.ListAndDetailContainerFragment;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
+import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.movie_list.MovieListViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.reminder.ReminderFragment;
 import com.example.ojtaadaassignment12.presenter.ui.reminder.ReminderViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.setting.SettingFragment;
@@ -56,8 +53,6 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-
 public class MainActivity extends AppCompatActivity {
     @Inject
     MainViewModel mainViewModel;
@@ -73,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     ReminderViewModel reminderViewModel;
+
+    @Inject
+    MovieListViewModel movieListViewModel;
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -141,27 +139,27 @@ public class MainActivity extends AppCompatActivity {
         final int NUMBER_OF_REMINDERS = 3;
 
         TableLayout reminderTableLayout = binding.navigationView.getHeaderView(0)
-                                            .findViewById(R.id.reminder_table);
+                .findViewById(R.id.reminder_table);
 
 
         //Theo dõi Reminder ViewModel để update Upcoming Reminder
         reminderViewModel.getRemindersLiveData().observe(this, reminders -> {
             Log.d("logd.allReminder", reminders.toString());
             List<Reminder> upcomingReminders =
-            reminders.stream()
-                    .sorted(Comparator.comparingLong(Reminder::getTimestamp)) // Sắp xếp theo timestamp
-                    .limit(NUMBER_OF_REMINDERS) // Lấy 3 phần tử đầu tiên
-                    .collect(Collectors.toList());
+                    reminders.stream()
+                            .sorted(Comparator.comparingLong(Reminder::getTimestamp)) // Sắp xếp theo timestamp
+                            .limit(NUMBER_OF_REMINDERS) // Lấy 3 phần tử đầu tiên
+                            .collect(Collectors.toList());
 
-                Log.d("logd.3reminder", "Reminder: " + upcomingReminders.toString());
+            Log.d("logd.3reminder", "Reminder: " + upcomingReminders.toString());
 
             reminderTableLayout.removeAllViews();
 
             for (Reminder reminder : upcomingReminders) {
-                    View tableRow = LayoutInflater.from(this)
-                            .inflate(R.layout.reminder_item_drawer, null);
+                View tableRow = LayoutInflater.from(this)
+                        .inflate(R.layout.reminder_item_drawer, null);
 
-                    TextView line1 = tableRow.findViewById(R.id.line_1);
+                TextView line1 = tableRow.findViewById(R.id.line_1);
                 TextView line2 = tableRow.findViewById(R.id.line_2);
 
                 String line1Text = reminder.getMovieTitle() + " - " +
@@ -175,13 +173,13 @@ public class MainActivity extends AppCompatActivity {
                 int day = calendar.get(Calendar.DATE);
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minute = calendar.get(Calendar.MINUTE);
-                String line2Text = year+ "/" + month + "/" + day +" " + hour + ":" + minute;
+                String line2Text = year + "/" + month + "/" + day + " " + hour + ":" + minute;
 
                 line1.setText(line1Text);
                 line2.setText(line2Text);
                 reminderTableLayout.addView(tableRow);
 
-                }
+            }
 
         });
     }
@@ -345,20 +343,40 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String selectedCategory;
+        int itemId = item.getItemId();
 
-        if (item.getItemId() == R.id.menu_item_popular) {
+        //Khi chọn Category trên toolbar
+        String selectedCategory = "";
+
+        if (itemId == R.id.menu_item_popular) {
             selectedCategory = "Popular";
-        } else if (item.getItemId() == R.id.menu_item_top_rated) {
+        } else if (itemId == R.id.menu_item_top_rated) {
             selectedCategory = "Top Rated";
-        } else if (item.getItemId() == R.id.menu_item_upcoming) {
+        } else if (itemId == R.id.menu_item_upcoming) {
             selectedCategory = "Upcoming";
-        } else {
+        } else if (itemId == R.id.menu_item_now_playing) {
             selectedCategory = "Now Playing";
         }
 
-        settingViewModel.setCategoryLiveData(selectedCategory);
-        settingViewModel.saveCategory(selectedCategory);
+        if (!selectedCategory.isEmpty()) {
+            settingViewModel.setCategoryLiveData(selectedCategory);
+            settingViewModel.saveCategory(selectedCategory);
+        }
+
+        //Khi chọn icon Grid/List
+        if (itemId == R.id.menu_item_list || itemId == R.id.menu_item_grid) {
+            movieListViewModel.getGridMode().setValue(itemId == R.id.menu_item_list);
+
+            if (itemId == R.id.menu_item_list) {
+                item.setVisible(false);
+                MenuItem gridItem = toolbar.getMenu().findItem(R.id.menu_item_grid);
+                if (gridItem != null) gridItem.setVisible(true);
+            } else if (itemId == R.id.menu_item_grid) {
+                item.setVisible(false);
+                MenuItem listItem = toolbar.getMenu().findItem(R.id.menu_item_list);
+                if (listItem != null) listItem.setVisible(true);
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }

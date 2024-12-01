@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="@color/royalblue"
         android:gravity="center_vertical"
 
-        android:background="@color/royalblue"
+        android:orientation="horizontal"
 
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/back_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/baseline_arrow_back_24"
-            />
+            android:src="@drawable/baseline_arrow_back_24" />
 
         <TextView
             android:id="@+id/reminder_fragment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textAlignment="center"
             android:text="All Reminders"
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="23sp"
 
@@ -48,9 +47,8 @@
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
 
-        app:layout_constraintTop_toBottomOf="@id/header_layout"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

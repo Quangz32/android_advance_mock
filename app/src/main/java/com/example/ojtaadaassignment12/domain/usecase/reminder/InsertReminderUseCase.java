@@ -6,7 +6,6 @@ import com.example.ojtaadaassignment12.domain.repository.ReminderRepository;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
 
 public class InsertReminderUseCase {
     private final ReminderRepository reminderRepository;

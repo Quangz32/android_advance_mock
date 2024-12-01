@@ -10,18 +10,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-
 import com.example.ojtaadaassignment12.App;
 import com.example.ojtaadaassignment12.R;
 import com.example.ojtaadaassignment12.domain.model.Reminder;
-import com.example.ojtaadaassignment12.domain.usecase.reminder.DeleteReminderUseCase;
 import com.example.ojtaadaassignment12.presenter.ui.reminder.ReminderViewModel;
-
-import java.util.Date;
 
 import javax.inject.Inject;
 
-public class ReminderWorker extends Worker{
+public class ReminderWorker extends Worker {
     @Inject
     ReminderViewModel reminderViewModel; //Để xoá dữ liệu khỏi DB
 

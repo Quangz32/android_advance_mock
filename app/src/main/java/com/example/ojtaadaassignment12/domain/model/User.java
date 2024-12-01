@@ -74,7 +74,7 @@ public class User implements Serializable {
     }
 
     @NonNull
-    public User clone(){
+    public User clone() {
         return new User(fullName, email, dob, gender, avatar);
     }
 }

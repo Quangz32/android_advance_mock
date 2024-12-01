@@ -5,7 +5,6 @@ import com.example.ojtaadaassignment12.data.mapper.ReminderMapper;
 import com.example.ojtaadaassignment12.domain.model.Reminder;
 import com.example.ojtaadaassignment12.domain.repository.ReminderRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,18 +33,19 @@ public class ReminderRepositoryImpl implements ReminderRepository {
         return reminderDao.getReminderById(reminderId).subscribeOn(Schedulers.io())
                 .map(ReminderMapper::mapToDomain);
     }
-//        return Completable.fromAction(() -> movieDao.insertMovie(movieMapper.mapToEntity(movie)))
+
+    //        return Completable.fromAction(() -> movieDao.insertMovie(movieMapper.mapToEntity(movie)))
 //            .subscribeOn(Schedulers.io());  // Thực thi trên background thread
     @Override
     public Completable insertReminder(Reminder reminder) {
-        return Completable.fromAction(()-> reminderDao.insertReminder(ReminderMapper.mapToEntity(reminder)))
-                        .subscribeOn(Schedulers.io());
+        return Completable.fromAction(() -> reminderDao.insertReminder(ReminderMapper.mapToEntity(reminder)))
+                .subscribeOn(Schedulers.io());
 //        reminderDao.insertReminder(ReminderMapper.mapToEntity(reminder));
     }
 
     @Override
     public Completable deleteReminder(Reminder reminder) {
-        return Completable.fromAction(()-> reminderDao.deleteReminder(ReminderMapper.mapToEntity(reminder)))
+        return Completable.fromAction(() -> reminderDao.deleteReminder(ReminderMapper.mapToEntity(reminder)))
                 .subscribeOn(Schedulers.io());
 //        reminderDao.deleteReminder(ReminderMapper.mapToEntity(reminder));
     }

@@ -126,10 +126,10 @@ public class MovieDetailFragment extends Fragment {
 
                                 long reminderTime = calendar.getTimeInMillis();
                                 Toast.makeText(requireContext(),
-                                        "time: "+ reminderTime, Toast.LENGTH_SHORT).show();
+                                        "time: " + reminderTime, Toast.LENGTH_SHORT).show();
 
                                 Movie movie = Objects.requireNonNull(viewModel.getMovieLiveData().getValue()).getClone();
-                                Reminder reminder = new Reminder((int) reminderTime, movie.getTitle(), movie.getReleaseDate(), movie.getVoteAverage(), movie.getPosterPath(), reminderTime );
+                                Reminder reminder = new Reminder((int) reminderTime, movie.getTitle(), movie.getReleaseDate(), movie.getVoteAverage(), movie.getPosterPath(), reminderTime);
 
                                 //Thêm vào DB
                                 reminderViewModel.insertReminder(reminder);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReminderMapper {
-    public static  ReminderEntity mapToEntity(Reminder reminder) {
+    public static ReminderEntity mapToEntity(Reminder reminder) {
         return new ReminderEntity(
                 reminder.getId(),
                 reminder.getMovieTitle(),
@@ -36,7 +36,6 @@ public class ReminderMapper {
         }
         return reminders;
     }
-
 
 
 }

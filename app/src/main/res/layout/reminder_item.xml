@@ -32,8 +32,8 @@
             android:textSize="16sp"
             android:textStyle="bold|italic"
 
-            app:layout_constraintStart_toEndOf="@id/movie_poster"
             app:layout_constraintEnd_toStartOf="@id/iv_delete"
+            app:layout_constraintStart_toEndOf="@id/movie_poster"
             app:layout_constraintTop_toTopOf="@id/movie_poster" />
 
         <TextView

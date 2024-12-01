@@ -1,13 +1,11 @@
 package com.example.ojtaadaassignment12.domain.usecase.reminder;
+
 import com.example.ojtaadaassignment12.domain.model.Reminder;
 import com.example.ojtaadaassignment12.domain.repository.ReminderRepository;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
 
 public class DeleteReminderUseCase {
     private final ReminderRepository reminderRepository;
@@ -17,7 +15,7 @@ public class DeleteReminderUseCase {
         this.reminderRepository = reminderRepository;
     }
 
-    public Completable  execute(Reminder reminder) {
-        return  reminderRepository.deleteReminder(reminder);
+    public Completable execute(Reminder reminder) {
+        return reminderRepository.deleteReminder(reminder);
     }
 }

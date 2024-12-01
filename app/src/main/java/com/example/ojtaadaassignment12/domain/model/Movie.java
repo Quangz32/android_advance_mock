@@ -100,7 +100,7 @@ public class Movie {
     }
 
     @NonNull
-    public Movie getClone(){
+    public Movie getClone() {
         return new Movie(id, title, overview, posterPath, releaseDate, voteAverage, adult, isFavorite);
     }
 }

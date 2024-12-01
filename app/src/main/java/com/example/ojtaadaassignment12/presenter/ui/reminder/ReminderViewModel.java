@@ -1,8 +1,5 @@
 package com.example.ojtaadaassignment12.presenter.ui.reminder;
 
-import android.view.View;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,7 +16,6 @@ import javax.inject.Singleton;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 @Singleton
 public class ReminderViewModel extends ViewModel {
@@ -43,7 +39,7 @@ public class ReminderViewModel extends ViewModel {
         this.deleteReminderUseCase = deleteReminderUseCase;
     }
 
-    public MutableLiveData<List<Reminder>> getRemindersLiveData(){
+    public MutableLiveData<List<Reminder>> getRemindersLiveData() {
         return reminders;
     }
 
@@ -79,7 +75,6 @@ public class ReminderViewModel extends ViewModel {
                         )
         );
     }
-
 
 
     @Override

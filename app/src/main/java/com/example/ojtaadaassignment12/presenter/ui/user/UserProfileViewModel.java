@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.ojtaadaassignment12.data.repository.UserRepositoryImpl;
 import com.example.ojtaadaassignment12.domain.model.User;
 import com.example.ojtaadaassignment12.domain.usecase.user.GetUserUseCase;
 import com.example.ojtaadaassignment12.domain.usecase.user.SaveUserUseCase;

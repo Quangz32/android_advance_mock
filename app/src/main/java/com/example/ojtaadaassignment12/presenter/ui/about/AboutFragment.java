@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.ojtaadaassignment12.R;
 import com.example.ojtaadaassignment12.databinding.FragmentAboutBinding;
 
 
@@ -38,7 +36,7 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         binding = FragmentAboutBinding.inflate(inflater, container, false);
+        binding = FragmentAboutBinding.inflate(inflater, container, false);
         binding.webview.loadUrl("https://www.themoviedb.org/about/our-history");
         setupWebView();
 

@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ojtaadaassignment12.App;
@@ -21,7 +22,9 @@ import com.example.ojtaadaassignment12.data.repository.MovieRepositoryPaging;
 import com.example.ojtaadaassignment12.databinding.FragmentMovieListBinding;
 import com.example.ojtaadaassignment12.domain.model.Movie;
 import com.example.ojtaadaassignment12.domain.repository.SettingRepository;
+import com.example.ojtaadaassignment12.presenter.adapter.MovieItemCallback;
 import com.example.ojtaadaassignment12.presenter.adapter.MoviePagingAdapter;
+import com.example.ojtaadaassignment12.presenter.adapter.MoviePagingGridAdapter;
 import com.example.ojtaadaassignment12.presenter.ui.favourite.FavoriteMoviesViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.main.MainViewModel;
 import com.example.ojtaadaassignment12.presenter.ui.movie_list_and_detail.detail.MovieDetailViewModel;
@@ -58,7 +61,8 @@ public class MovieListFragment extends Fragment {
 
     //    private MovieListViewModel viewModel;
     private FragmentMovieListBinding binding;
-    private MoviePagingAdapter moviePagingAdapter;
+    private MoviePagingAdapter listPagingAdapter;
+    private MoviePagingGridAdapter gridPagingAdapter;
 
     @Nullable
     @Override
@@ -72,64 +76,23 @@ public class MovieListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // Inject dependencies
         ((App) requireActivity().getApplication()).getAppComponent().inject(this);
-        setupRecyclerView();
+        setupPagingAdapters();
         setupViewModel();
+        setupRecyclerView();
     }
 
-    private void setupViewModel() {
-//        viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue());
-//        Log.d("logd.category.setup", settingViewModel.getCategoryLiveData().getValue().toString());
-
-        //Fetch movies khi mở app
-//        viewModel.fetchMovies(settingPreferences.getString("category", "Popular"));
-        viewModel.fetchMovies(settingRepository.getCategory());
-
-        viewModel.getMoviePagingData().observe(getViewLifecycleOwner(), pagingData -> {
-            moviePagingAdapter.submitData(getLifecycle(), pagingData);
-        });
-
-
-        //theo dõi thay đổi trong Setting
-        settingViewModel.getCategoryLiveData().observe(getViewLifecycleOwner(),
-                category -> {
-                    Log.d("logd.category.obs", category);
-                    viewModel.fetchMovies(category);
-                }
-        );
-
-        settingViewModel.getMovieRateLiveData().observe(getViewLifecycleOwner(),
-                movieRate -> {
-                    viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue());
-                });
-
-        settingViewModel.getReleaseYearLiveData().observe(getViewLifecycleOwner(),
-                releaseYear -> {
-                    viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue());
-                });
-
-        settingViewModel.getSortByLiveData().observe(getViewLifecycleOwner(),
-                sortBy -> {
-                    viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue());
-                });
-
-    }
-
-    private void setupRecyclerView() {
-        moviePagingAdapter = new MoviePagingAdapter();
-        moviePagingAdapter.setMovieActionListener(new MoviePagingAdapter.MovieActionListener() {
+    private void setupPagingAdapters() {
+        //Common ItemCallback
+        MovieItemCallback movieItemCallback = new MovieItemCallback() {
             @Override
             public void onMovieClick(Movie movie, int position) {
                 Log.d("logd.movie.click", movie.toString());
 
-//                MovieDetailViewModel movieDetailViewModel =
-//                        new ViewModelProvider(requireActivity()).get(MovieDetailViewModel.class);
                 movieDetailViewModel.getMovieLiveData().setValue(movie);
                 NavController navController = Navigation.findNavController(requireView());
 
                 navController.navigate(R.id.movieDetailFragment);
                 mainViewModel.getToolbarText().setValue(movie.getTitle());
-
-
             }
 
             @Override
@@ -138,10 +101,53 @@ public class MovieListFragment extends Fragment {
                 favoriteViewModel.toggleFavorite(movie); //Cập nhật trong DB
 //                movie.setFavorite(!movie.isFavorite());
             }
+        };
+
+        //LIST ADAPTER
+        listPagingAdapter = new MoviePagingAdapter();
+        listPagingAdapter.setMovieItemCallback(movieItemCallback);
+
+        //GRID ADAPTER
+        gridPagingAdapter = new MoviePagingGridAdapter();
+        gridPagingAdapter.setMovieItemCallback(movieItemCallback);
+    }
+
+    private void setupViewModel() {
+
+        //Fetch movies khi mở app
+        viewModel.fetchMovies(settingRepository.getCategory());
+
+        viewModel.getMoviePagingData().observe(getViewLifecycleOwner(), pagingData -> {
+            listPagingAdapter.submitData(getLifecycle(), pagingData);
+            gridPagingAdapter.submitData(getLifecycle(), pagingData);
         });
 
-        binding.recyclerMovies.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerMovies.setAdapter(moviePagingAdapter);
+        //theo dõi thay đổi trong Setting
+        settingViewModel.getCategoryLiveData().observe(getViewLifecycleOwner(),
+                category -> viewModel.fetchMovies(category)
+        );
+
+        settingViewModel.getMovieRateLiveData().observe(getViewLifecycleOwner(),
+                movieRate -> viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue()));
+
+        settingViewModel.getReleaseYearLiveData().observe(getViewLifecycleOwner(),
+                releaseYear -> viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue()));
+
+        settingViewModel.getSortByLiveData().observe(getViewLifecycleOwner(),
+                sortBy -> viewModel.fetchMovies(settingViewModel.getCategoryLiveData().getValue()));
+
+    }
+
+    private void setupRecyclerView() {
+        viewModel.getGridMode().observe(getViewLifecycleOwner(), isGridMode -> {
+            if (isGridMode) {
+                binding.recyclerMovies.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                binding.recyclerMovies.setAdapter(gridPagingAdapter);
+            } else {
+                binding.recyclerMovies.setLayoutManager(new LinearLayoutManager(getContext()));
+                binding.recyclerMovies.setAdapter(listPagingAdapter);
+            }
+        });
     }
 
     @Override

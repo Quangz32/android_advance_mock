@@ -1,23 +1,15 @@
 package com.example.ojtaadaassignment12.presenter.ui.reminder;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.work.WorkManager;
 
 import com.example.ojtaadaassignment12.App;
@@ -29,7 +21,6 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -70,7 +61,7 @@ public class ReminderFragment extends Fragment {
             }
         });
 
-        binding.backBtn.setOnClickListener(v->{
+        binding.backBtn.setOnClickListener(v -> {
             getParentFragmentManager().popBackStack();
         });
     }
@@ -149,7 +140,7 @@ public class ReminderFragment extends Fragment {
 //        }
 //    }
 
-    private View getTableRow(Reminder reminder){
+    private View getTableRow(Reminder reminder) {
         View tableRow = LayoutInflater.from(requireContext()).inflate(R.layout.reminder_item, null);
 
         ImageView ivPoster = tableRow.findViewById(R.id.movie_poster);
@@ -177,7 +168,7 @@ public class ReminderFragment extends Fragment {
         line1.setText(line1Text);
         line2.setText(line2Text);
 
-        ivDelete.setOnClickListener(v->{
+        ivDelete.setOnClickListener(v -> {
             reminderViewModel.deleteReminder(reminder);
             //Cancel Pending intent
             WorkManager.getInstance(requireContext()).cancelAllWorkByTag(String.valueOf(reminder.getId()));

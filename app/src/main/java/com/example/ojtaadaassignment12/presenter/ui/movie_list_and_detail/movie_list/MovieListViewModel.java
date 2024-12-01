@@ -27,6 +27,8 @@ public class MovieListViewModel extends ViewModel {
 
     private final MutableLiveData<PagingData<Movie>> moviesPagingLiveData = new MutableLiveData<>();
 
+    private final MutableLiveData<Boolean> gridMode = new MutableLiveData<>(false);
+
     @Inject
     public MovieListViewModel(
             GetMoviePagingDataUseCase getMoviePagingDataUC
@@ -37,6 +39,10 @@ public class MovieListViewModel extends ViewModel {
 
     public MutableLiveData<PagingData<Movie>> getMoviePagingData() {
         return moviesPagingLiveData;
+    }
+
+    public MutableLiveData<Boolean> getGridMode() {
+        return gridMode;
     }
 
     public void fetchMovies(String category) {

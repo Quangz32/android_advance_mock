@@ -5,7 +5,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.ojtaadaassignment12.data.local.entity.MovieEntity;
 import com.example.ojtaadaassignment12.data.local.entity.ReminderEntity;
 
 import java.util.List;
